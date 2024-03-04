@@ -1,4 +1,6 @@
 import { useState } from "react"
+
+import { useEventListener } from "@/hooks/useEventListener"
 import { useInfinitePhotos } from "../api/useInfinitePhotos"
 
 import Header from "../components/Header"
@@ -6,7 +8,6 @@ import Hero from "../components/Hero"
 import PhotoSection from "../components/PhotoSection"
 
 import type { THeaderPosition } from "../components/Header"
-import { useEventListener } from "@/hooks/useEventListener"
 
 export default function Home() {
     const [headerPosition, setHeaderPosition] =

@@ -1,8 +1,8 @@
 import { useRef, useState } from "react"
 import { IconSearch } from "@tabler/icons-react"
-
 import { twMerge } from "tailwind-merge"
-import { useEventListener } from "@/hooks/useEventListener"
+
+import { useOnClickOutside } from "@/hooks/useOnClickOutside"
 
 const searchBarStyles = {
     container: {
@@ -40,16 +40,11 @@ export default function SearchBar({ size = "medium" }: ISearchBarProps) {
         setIsFocused(true)
     }
 
-    const handleClickOutside = (event: MouseEvent) => {
-        if (
-            searchBarRef.current &&
-            !searchBarRef.current.contains(event.target as Node)
-        ) {
-            setIsFocused(false)
-        }
+    const handleClickOutside = () => {
+        setIsFocused(false)
     }
 
-    useEventListener("mousedown", handleClickOutside)
+    useOnClickOutside(searchBarRef, handleClickOutside)
 
     return (
         <div
