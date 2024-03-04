@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { IconSearch } from "@tabler/icons-react"
 
 import { twMerge } from "tailwind-merge"
+import { useEventListener } from "@/hooks/useEventListener"
 
 const searchBarStyles = {
     container: {
@@ -12,14 +13,14 @@ const searchBarStyles = {
         },
     },
     input: {
-        base: "py-3 px-4 outline-none text-lg tracking-wide text-neutral-500 border-r duration-300 h-full rounded-bl-md rounded-tl-md",
+        base: "py-3 px-4 outline-none tracking-wide text-neutral-500 duration-150 h-full rounded-bl-md rounded-tl-md placeholder:text-neutral-700/60",
         size: {
-            small: "w-[calc(100%-48px)]",
-            medium: "w-[calc(100%-53px)]",
+            small: "w-[calc(100%-48px)] text-[17.5px]",
+            medium: "w-[calc(100%-53px)] text-lg",
         },
     },
     searchButton: {
-        base: "flex absolute right-0 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 placeholder:text-neutral-700 active:text-slate-900 duration-300 h-full w-[50px] rounded-br-md rounded-bt-md",
+        base: "flex absolute right-0 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 active:text-slate-900 duration-150 h-full w-[50px] rounded-br-md rounded-bt-md",
     },
 }
 
@@ -33,9 +34,7 @@ export default function SearchBar({ size = "medium" }: ISearchBarProps) {
     const [isFocused, setIsFocused] = useState(false)
     const searchBarRef = useRef<HTMLDivElement>(null)
 
-    const handleSearchClick = () => {
-       
-    }
+    const handleSearchClick = () => {}
 
     const handleFocus = () => {
         setIsFocused(true)
@@ -50,12 +49,7 @@ export default function SearchBar({ size = "medium" }: ISearchBarProps) {
         }
     }
 
-    useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside)
-
-        return () =>
-            document.removeEventListener("mousedown", handleClickOutside)
-    }, [])
+    useEventListener("mousedown", handleClickOutside)
 
     return (
         <div
@@ -80,7 +74,7 @@ export default function SearchBar({ size = "medium" }: ISearchBarProps) {
                 type="submit"
                 onClick={handleSearchClick}
                 className={twMerge(
-                    isFocused ? "bg-white" : "bg-transparent",
+                    isFocused ? "bg-white border-l" : "bg-transparent",
                     searchBarStyles.searchButton.base
                 )}
             >

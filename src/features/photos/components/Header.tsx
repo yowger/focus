@@ -12,7 +12,7 @@ const headerStyles = {
     },
 }
 
-type THeaderPosition = "fixed" | "absolute"
+export type THeaderPosition = "fixed" | "absolute"
 
 interface IHeaderProps {
     position?: THeaderPosition
@@ -23,7 +23,7 @@ export default function Header({ position = "fixed" }: IHeaderProps) {
         <header
             className={twMerge(
                 headerStyles.container.position[position],
-                "flex top-0 left-0 h-[72px] w-full items-center z-10"
+                "flex top-0 left-0 h-[72px] w-full items-center z-10 duration-150"
             )}
         >
             <nav className="flex-1">

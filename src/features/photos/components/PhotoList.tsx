@@ -16,9 +16,9 @@ export default function PhotoList({ photos }: IPhotoListProps) {
                         <img
                             src={photo.src.large}
                             alt={photo.alt}
-                            className="object-cover object-center w-full h-[413px] max-w-full"
+                            className="object-cover object-center w-full h-[413px] max-w-full rounded-sm"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-b from-slate-800/20 via-transparent to-slate-800/20 opacity-0 group-hover:opacity-100 duration-150"></div>
+                        <div className="absolute inset-0 bg-gradient-to-b from-slate-800/20 via-transparent to-slate-800/20 opacity-0 group-hover:opacity-100 duration-150 rounded-sm"></div>
                     </div>
                 )
             })}
