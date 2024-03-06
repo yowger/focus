@@ -8,17 +8,17 @@ import DropDownList from "./DropDownList"
 
 import type { IMenuItem } from "./types"
 
-interface IDropDown {
-    menuItems: IMenuItem[]
+interface IDropDown<T extends string | null> {
+    menuItems: IMenuItem<T>[]
     initialActiveIndex: number
-    onSelect: (item: IMenuItem) => void
+    onSelect: (item: IMenuItem<T>) => void
 }
 
-export default function DropDown({
+export default function DropDown<T extends string | null>({
     menuItems,
     initialActiveIndex = 0,
     onSelect,
-}: IDropDown) {
+}: IDropDown<T>) {
     const [isOpen, setIsOpen] = useState(false)
     const [activeIndex, setActiveIndex] = useState(initialActiveIndex)
     const dropdownRef = useRef<HTMLDivElement>(null)

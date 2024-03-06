@@ -1,25 +1,31 @@
-export interface IPaginationParams {
-    per_page?: number
-    page?: number
-}
+export type TPhotoColors =
+    | "red"
+    | "orange"
+    | "yellow"
+    | "green"
+    | "turquoise"
+    | "blue"
+    | "violet"
+    | "pink"
+    | "brown"
+    | "black"
+    | "gray"
+    | "white"
+
+export type TPhotoSizes = "small" | "medium" | "large"
+
+export type TPhotoOrientations = "landscape" | "portrait" | "square"
 
 export interface IQueryParams {
     query: string
-    orientation?: "landscape" | "portrait" | "square"
-    size?: "small" | "medium" | "large"
-    color?:
-        | "red"
-        | "orange"
-        | "yellow"
-        | "green"
-        | "turquoise"
-        | "blue"
-        | "violet"
-        | "pink"
-        | "brown"
-        | "black"
-        | "gray"
-        | "white"
+    color?: TPhotoColors | null
+    orientation?: TPhotoOrientations | null
+    size?: TPhotoSizes | null
+}
+
+export interface IPaginationParams {
+    per_page?: number
+    page?: number
 }
 
 interface IPaginationObject {

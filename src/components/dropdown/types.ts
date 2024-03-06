@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 
-export interface IMenuItem {
+export interface IMenuItem<T extends string | null> {
     label: ReactNode
-    value: string | null
+    value: T
 }

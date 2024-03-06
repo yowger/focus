@@ -2,7 +2,7 @@ import DropDownItem from "./DropDownItem"
 import type { IMenuItem } from "./types"
 
 interface IDropDownList {
-    menuItems: IMenuItem[]
+    menuItems: IMenuItem<string | null>[]
     activeIndex: number
     onItemClick: (activeIndex: number) => void
 }

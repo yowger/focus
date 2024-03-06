@@ -3,17 +3,19 @@ import { useParams } from "react-router-dom"
 
 import { useInfinitePhotos } from "../api/useInfinitePhotos"
 
-import Filter from "../components/Filter"
-import Header from "../components/Header"
-import PhotoSection from "../components/PhotoSection"
-import Title from "../components/Title"
+import { Filter, Header, PhotoSection, Title } from "../components"
 
 import type { IMenuItem } from "@/components/dropdown/types"
+import type {
+    TPhotoColors,
+    TPhotoOrientations,
+    TPhotoSizes,
+} from "../types/photoTypes"
 
 interface IPhotoFilters {
-    orientation: string | null
-    size: string | null
-    color: string | null
+    color: TPhotoColors | null
+    orientation: TPhotoOrientations | null
+    size: TPhotoSizes | null
 }
 
 function Search() {
@@ -31,21 +33,23 @@ function Search() {
         size: photoFilters.size,
     })
 
-    const handleSelectOrientation = (item: IMenuItem) => {
+    const handleSelectOrientation = (
+        item: IMenuItem<TPhotoOrientations | null>
+    ) => {
         setPhotoFilters({
             ...photoFilters,
             orientation: item.value,
         })
     }
 
-    const handleSelectSize = (item: IMenuItem) => {
+    const handleSelectSize = (item: IMenuItem<TPhotoSizes | null>) => {
         setPhotoFilters({
             ...photoFilters,
             size: item.value,
         })
     }
 
-    const handleSelectColor = (item: IMenuItem) => {
+    const handleSelectColor = (item: IMenuItem<TPhotoColors | null>) => {
         setPhotoFilters({
             ...photoFilters,
             color: item.value,
