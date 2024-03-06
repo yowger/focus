@@ -11,12 +11,13 @@ export default function PhotoList({ photos }: IPhotoListProps) {
                 return (
                     <div
                         key={photo.id}
-                        className="relative cursor-pointer group"
+                        className="relative cursor-pointer group bg-slate-50"
                     >
                         <img
                             src={photo.src.large}
                             alt={photo.alt}
-                            className="object-cover object-center w-full h-[413px] max-w-full rounded-sm"
+                            className="object-cover object-center w-full aspect-[4/3] max-w-full rounded-sm"
+                            loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-b from-slate-800/20 via-transparent to-slate-800/20 opacity-0 group-hover:opacity-100 duration-150 rounded-sm"></div>
                     </div>

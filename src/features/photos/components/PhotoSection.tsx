@@ -30,6 +30,7 @@ export default function PhotoSection({ photos }: IPhotoSectionProps) {
     if (photos.isError) {
         return <div>Something went wrong, please try again</div>
     }
+
     return (
         <section>
             <InfiniteScroll

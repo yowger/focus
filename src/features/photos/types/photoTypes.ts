@@ -3,6 +3,25 @@ export interface IPaginationParams {
     page?: number
 }
 
+export interface IQueryParams {
+    query: string
+    orientation?: "landscape" | "portrait" | "square"
+    size?: "small" | "medium" | "large"
+    color?:
+        | "red"
+        | "orange"
+        | "yellow"
+        | "green"
+        | "turquoise"
+        | "blue"
+        | "violet"
+        | "pink"
+        | "brown"
+        | "black"
+        | "gray"
+        | "white"
+}
+
 interface IPaginationObject {
     page: number
     per_page: number

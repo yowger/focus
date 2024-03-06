@@ -1,5 +1,6 @@
 import { useRef, useState } from "react"
 import { IconSearch } from "@tabler/icons-react"
+import { useNavigate } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
 
 import { useOnClickOutside } from "@/hooks/useOnClickOutside"
@@ -32,9 +33,20 @@ interface ISearchBarProps {
 
 export default function SearchBar({ size = "medium" }: ISearchBarProps) {
     const [isFocused, setIsFocused] = useState(false)
-    const searchBarRef = useRef<HTMLDivElement>(null)
+    const searchRef = useRef<HTMLInputElement>(null)
+    const searchBarContainerRef = useRef<HTMLDivElement>(null)
 
-    const handleSearchClick = () => {}
+    const navigate = useNavigate()
+
+    const handleSearchClick = () => {
+        if (!searchRef.current) return
+
+        const query = searchRef.current.value.trim().toLowerCase()
+
+        if (query) {
+            navigate(`/search/${query}`)
+        }
+    }
 
     const handleFocus = () => {
         setIsFocused(true)
@@ -44,11 +56,11 @@ export default function SearchBar({ size = "medium" }: ISearchBarProps) {
         setIsFocused(false)
     }
 
-    useOnClickOutside(searchBarRef, handleClickOutside)
+    useOnClickOutside(searchBarContainerRef, handleClickOutside)
 
     return (
         <div
-            ref={searchBarRef}
+            ref={searchBarContainerRef}
             className={twMerge(
                 isFocused ? "bg-white" : "bg-neutral-100 border-neutral-100",
                 searchBarStyles.container.size[size],
@@ -57,6 +69,7 @@ export default function SearchBar({ size = "medium" }: ISearchBarProps) {
             onFocus={handleFocus}
         >
             <input
+                ref={searchRef}
                 type="search"
                 placeholder="Search for photos"
                 className={twMerge(

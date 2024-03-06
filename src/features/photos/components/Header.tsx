@@ -2,11 +2,12 @@ import { twMerge } from "tailwind-merge"
 
 import Logo from "./Logo"
 import SearchBar from "./SearchBar"
+import { Link } from "react-router-dom"
 
 const headerStyles = {
     container: {
         position: {
-            fixed: "fixed bg-white shadow-md",
+            fixed: "fixed bg-white",
             absolute: "absolute bg-transparent",
         },
     },
@@ -29,7 +30,9 @@ export default function Header({ position = "fixed" }: IHeaderProps) {
             <nav className="flex-1">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="flex items-center gap-3 md:gap-5 justify-between">
-                        <Logo />
+                        <Link to="/">
+                            <Logo />
+                        </Link>
 
                         {position === "fixed" && (
                             <div className="flex-1 max-w-[56ch]">

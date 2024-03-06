@@ -9,7 +9,7 @@ import PhotoSection from "../components/PhotoSection"
 
 import type { THeaderPosition } from "../components/Header"
 
-export default function Home() {
+function Home() {
     const [headerPosition, setHeaderPosition] =
         useState<THeaderPosition>("absolute")
 
@@ -35,6 +35,8 @@ export default function Home() {
         </div>
     )
 }
+
+export const Component = Home
 
 // resent searches
 // try again button
