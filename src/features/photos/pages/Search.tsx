@@ -58,7 +58,7 @@ function Search() {
 
     return (
         <div className="">
-            <Header />
+            <Header position="fixed" />
 
             <div className="flex flex-col max-w-7xl mx-auto px-4 mt-20 gap-8">
                 <Title>{query}</Title>

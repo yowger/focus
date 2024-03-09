@@ -7,3 +7,20 @@
         @apply text-slate-900;
     }
 }
+
+.slash {
+    position: relative;
+    width: "100%";
+    height: "100%";
+}
+
+.slash::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgb(203 213 225);
+    transform: translateY(-50%) rotate(-45deg);
+}

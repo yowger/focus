@@ -11,7 +11,7 @@ export interface IColorMenuItem<T extends string | null> extends IMenuItem<T> {
     color: string
 }
 
-export type menuItems<V extends TVariant, T extends string> = V extends "color"
+export type TMenuItems<V extends TVariant, T extends string> = V extends "color"
     ? IColorMenuItem<T | null>[]
     : IMenuItem<T | null>[]
 

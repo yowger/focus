@@ -7,12 +7,13 @@ import DropDownMenu from "./DropDownMenu"
 import DropDownList from "./DropDownList"
 
 import { isColorMenu } from "./types"
-import type { TVariant, menuItems } from "./types"
+import type { TVariant, TMenuItems } from "./types"
+import DropDownColorList from "./DropDownColorList"
 
 interface IDropDownProps<V extends TVariant, T extends string> {
     initialActiveIndex: number
-    menuItems: menuItems<V, T>
-    onSelect: (selectedItem: menuItems<V, T>[number]) => void
+    menuItems: TMenuItems<V, T>
+    onSelect: (selectedItem: TMenuItems<V, T>[number]) => void
 }
 
 export default function DropDown<V extends TVariant, T extends string>({
@@ -49,11 +50,32 @@ export default function DropDown<V extends TVariant, T extends string>({
             return (
                 <Fragment>
                     <DropdownButton onClick={handleOpenState} isOpen={isOpen}>
-                        <div
-                            className={`w-4 h-4 bg-[${menuItems[activeIndex].color}}]`}
-                        />
-                        {menuItems[activeIndex].label}
+                        <div className="flex items-center">
+                            {menuItems[activeIndex].value !== null && (
+                                <div
+                                    style={{
+                                        backgroundColor:
+                                            menuItems[activeIndex].color,
+                                        border:
+                                            menuItems[activeIndex].value ===
+                                            "white"
+                                                ? "1px solid rgb(209 213 219)"
+                                                : "",
+                                    }}
+                                    className={`w-6 h-6 rounded-full mr-2 bg-[${menuItems[activeIndex].color}}]`}
+                                />
+                            )}
+                            {menuItems[activeIndex].label}
+                        </div>
                     </DropdownButton>
+                    {isOpen && (
+                        <DropDownMenu>
+                            <DropDownColorList
+                                colorMenuList={menuItems}
+                                onItemClick={handleItemClick}
+                            />
+                        </DropDownMenu>
+                    )}
                 </Fragment>
             )
         } else {
@@ -77,7 +99,7 @@ export default function DropDown<V extends TVariant, T extends string>({
     }
 
     return (
-        <div ref={dropdownRef} className="relative z-50">
+        <div ref={dropdownRef} className="relative z-10">
             {renderDropDown()}
         </div>
     )

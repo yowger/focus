@@ -17,7 +17,7 @@ export default function DropdownButton({
     return (
         <button
             onClick={onClick}
-            className="w-full h-[50px] flex justify-between items-center px-4 text-lg font-medium rounded-md border border-slate-300 hover:border-slate-800"
+            className="w-full h-[50px] flex justify-between items-center px-4 text-lg font-medium rounded-md border border-slate-300 bg-white hover:border-slate-800"
         >
             {children}
             <span
