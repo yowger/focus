@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { Fragment, useRef, useState } from "react"
 
 import { useOnClickOutside } from "@/hooks/useOnClickOutside"
 
@@ -6,19 +6,20 @@ import DropdownButton from "./DropDownButton"
 import DropDownMenu from "./DropDownMenu"
 import DropDownList from "./DropDownList"
 
-import type { IMenuItem } from "./types"
+import { isColorMenu } from "./types"
+import type { TVariant, menuItems } from "./types"
 
-interface IDropDown<T extends string | null> {
-    menuItems: IMenuItem<T>[]
+interface IDropDownProps<V extends TVariant, T extends string> {
     initialActiveIndex: number
-    onSelect: (item: IMenuItem<T>) => void
+    menuItems: menuItems<V, T>
+    onSelect: (selectedItem: menuItems<V, T>[number]) => void
 }
 
-export default function DropDown<T extends string | null>({
-    menuItems,
+export default function DropDown<V extends TVariant, T extends string>({
     initialActiveIndex = 0,
+    menuItems,
     onSelect,
-}: IDropDown<T>) {
+}: IDropDownProps<V, T>) {
     const [isOpen, setIsOpen] = useState(false)
     const [activeIndex, setActiveIndex] = useState(initialActiveIndex)
     const dropdownRef = useRef<HTMLDivElement>(null)
@@ -41,20 +42,43 @@ export default function DropDown<T extends string | null>({
 
     useOnClickOutside(dropdownRef, handleClickOutside)
 
+    const renderDropDown = () => {
+        if (menuItems.length === 0) return
+
+        if (isColorMenu(menuItems)) {
+            return (
+                <Fragment>
+                    <DropdownButton onClick={handleOpenState} isOpen={isOpen}>
+                        <div
+                            className={`w-4 h-4 bg-[${menuItems[activeIndex].color}}]`}
+                        />
+                        {menuItems[activeIndex].label}
+                    </DropdownButton>
+                </Fragment>
+            )
+        } else {
+            return (
+                <Fragment>
+                    <DropdownButton onClick={handleOpenState} isOpen={isOpen}>
+                        {menuItems[activeIndex].label}
+                    </DropdownButton>
+                    {isOpen && (
+                        <DropDownMenu>
+                            <DropDownList
+                                menuItems={menuItems}
+                                activeIndex={activeIndex}
+                                onItemClick={handleItemClick}
+                            />
+                        </DropDownMenu>
+                    )}
+                </Fragment>
+            )
+        }
+    }
+
     return (
         <div ref={dropdownRef} className="relative z-50">
-            <DropdownButton onClick={handleOpenState} isOpen={isOpen}>
-                {menuItems[activeIndex].label}
-            </DropdownButton>
-            {isOpen && (
-                <DropDownMenu>
-                    <DropDownList
-                        menuItems={menuItems}
-                        activeIndex={activeIndex}
-                        onItemClick={handleItemClick}
-                    />
-                </DropDownMenu>
-            )}
+            {renderDropDown()}
         </div>
     )
 }

@@ -5,7 +5,7 @@ import { useInfinitePhotos } from "../api/useInfinitePhotos"
 
 import { Filter, Header, PhotoSection, Title } from "../components"
 
-import type { IMenuItem } from "@/components/dropdown/types"
+import type { IColorMenuItem, IMenuItem } from "@/components/dropdown/types"
 import type {
     TPhotoColors,
     TPhotoOrientations,
@@ -49,7 +49,7 @@ function Search() {
         })
     }
 
-    const handleSelectColor = (item: IMenuItem<TPhotoColors | null>) => {
+    const handleSelectColor = (item: IColorMenuItem<TPhotoColors | null>) => {
         setPhotoFilters({
             ...photoFilters,
             color: item.value,
@@ -78,3 +78,5 @@ function Search() {
 }
 
 export const Component = Search
+
+// apply url when updating filter

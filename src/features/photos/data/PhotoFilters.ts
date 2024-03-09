@@ -1,4 +1,4 @@
-import type { IMenuItem } from "@/components/dropdown/types"
+import type { IColorMenuItem, IMenuItem } from "@/components/dropdown/types"
 import type {
     TPhotoColors,
     TPhotoOrientations,
@@ -7,30 +7,30 @@ import type {
 
 export const orientationItems: IMenuItem<TPhotoOrientations | null>[] = [
     { label: "All orientations", value: null },
-    { label: "landscape", value: "landscape" },
-    { label: "portrait", value: "portrait" },
+    { label: "Landscape", value: "landscape" },
+    { label: "Portrait", value: "portrait" },
     { label: "square", value: "square" },
 ]
 
 export const sizeItems: IMenuItem<TPhotoSizes | null>[] = [
     { label: "All Sizes", value: null },
-    { label: "small", value: "small" },
-    { label: "medium", value: "medium" },
-    { label: "large", value: "large" },
+    { label: "Small", value: "small" },
+    { label: "Medium", value: "medium" },
+    { label: "Large", value: "large" },
 ]
 
-export const colorItems: IMenuItem<TPhotoColors | null>[] = [
-    { label: "All Colors", value: null },
-    { label: "red", value: "red" },
-    { label: "orange", value: "orange" },
-    { label: "yellow", value: "yellow" },
-    { label: "green", value: "green" },
-    { label: "turquoise", value: "turquoise" },
-    { label: "blue", value: "blue" },
-    { label: "violet", value: "violet" },
-    { label: "pink", value: "pink" },
-    { label: "brown", value: "brown" },
-    { label: "black", value: "black" },
-    { label: "gray", value: "gray" },
-    { label: "white", value: "white" },
+export const colorItems: IColorMenuItem<TPhotoColors | null>[] = [
+    { label: "All Colors", value: null, color: "red" },
+    { label: "red", value: "red", color: "red" },
+    { label: "orange", value: "orange", color: "red" },
+    { label: "yellow", value: "yellow", color: "red" },
+    { label: "green", value: "green", color: "red" },
+    { label: "turquoise", value: "turquoise", color: "red" },
+    { label: "blue", value: "blue", color: "red" },
+    { label: "violet", value: "violet", color: "red" },
+    { label: "pink", value: "pink", color: "red" },
+    { label: "brown", value: "brown", color: "red" },
+    { label: "black", value: "black", color: "red" },
+    { label: "gray", value: "gray", color: "red" },
+    { label: "white", value: "white", color: "red" },
 ]

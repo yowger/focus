@@ -1,19 +1,19 @@
 import { useState } from "react"
 
 import { useEventListener } from "@/hooks/useEventListener"
-import { useInfinitePhotos } from "../api/useInfinitePhotos"
 
 import Header from "../components/Header"
 import Hero from "../components/Hero"
 import PhotoSection from "../components/PhotoSection"
 
 import type { THeaderPosition } from "../components/Header"
+import { useInfiniteCuratedPhotos } from "../api/useInfiniteCuratedPhotos"
 
 function Home() {
     const [headerPosition, setHeaderPosition] =
         useState<THeaderPosition>("absolute")
 
-    const photos = useInfinitePhotos({ query: "dog" })
+    const photos = useInfiniteCuratedPhotos()
 
     const changeHeaderPosition = () => {
         if (window.scrollY >= 500) {

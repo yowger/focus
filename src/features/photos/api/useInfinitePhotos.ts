@@ -13,7 +13,7 @@ interface IGetPhotosParams extends IPaginationParams, IQueryParams {}
 
 export const getPhotos = ({
     page = 1,
-    per_page = 12,
+    per_page = 15,
     query,
     orientation,
     size,
