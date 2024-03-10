@@ -5,6 +5,8 @@ import { twMerge } from "tailwind-merge"
 
 import { useOnClickOutside } from "@/hooks/useOnClickOutside"
 
+import type { KeyboardEvent } from "react"
+
 const searchBarStyles = {
     container: {
         base: "relative w-full rounded-md flex border duration-300",
@@ -38,13 +40,19 @@ export default function SearchBar({ size = "medium" }: ISearchBarProps) {
 
     const navigate = useNavigate()
 
-    const handleSearchClick = () => {
+    const handleSearch = () => {
         if (!searchRef.current) return
 
         const query = searchRef.current.value.trim().toLowerCase()
 
         if (query) {
             navigate(`/search/${query}`)
+        }
+    }
+
+    const handleEnter = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            handleSearch()
         }
     }
 
@@ -70,6 +78,7 @@ export default function SearchBar({ size = "medium" }: ISearchBarProps) {
         >
             <input
                 ref={searchRef}
+                onKeyDown={handleEnter}
                 type="search"
                 placeholder="Search for photos"
                 className={twMerge(
@@ -80,7 +89,7 @@ export default function SearchBar({ size = "medium" }: ISearchBarProps) {
             />
             <button
                 type="submit"
-                onClick={handleSearchClick}
+                onClick={handleSearch}
                 className={twMerge(
                     isFocused ? "bg-white border-l" : "bg-transparent",
                     searchBarStyles.searchButton.base

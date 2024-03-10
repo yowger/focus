@@ -10,17 +10,17 @@ import { isColorMenu } from "./types"
 import type { TVariant, TMenuItems } from "./types"
 import DropDownColorList from "./DropDownColorList"
 
-interface IDropDownProps<V extends TVariant, T extends string> {
+interface IQueryFilter<V extends TVariant, T extends string> {
     initialActiveIndex: number
     menuItems: TMenuItems<V, T>
     onSelect: (selectedItem: TMenuItems<V, T>[number]) => void
 }
 
-export default function DropDown<V extends TVariant, T extends string>({
+export default function QueryFilter<V extends TVariant, T extends string>({
     initialActiveIndex = 0,
     menuItems,
     onSelect,
-}: IDropDownProps<V, T>) {
+}: IQueryFilter<V, T>) {
     const [isOpen, setIsOpen] = useState(false)
     const [activeIndex, setActiveIndex] = useState(initialActiveIndex)
     const dropdownRef = useRef<HTMLDivElement>(null)

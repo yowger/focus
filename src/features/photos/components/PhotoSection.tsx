@@ -6,13 +6,17 @@ import type {
     InfiniteData,
     UseInfiniteQueryResult,
 } from "@tanstack/react-query"
-import type { IPhotos } from "../types/photoTypes"
+import type { IPhoto, IPhotos } from "../types/photoTypes"
 
 interface IPhotoSectionProps {
     photos: UseInfiniteQueryResult<InfiniteData<IPhotos>>
+    onPhotoClick?: (photo: IPhoto) => void
 }
 
-export default function PhotoSection({ photos }: IPhotoSectionProps) {
+export default function PhotoSection({
+    photos,
+    onPhotoClick,
+}: IPhotoSectionProps) {
     const photosTotalLength = photos.data?.pages[0].total_results || 0
     const photosLength =
         photos.data?.pages.reduce((acc, page) => acc + page.photos.length, 0) ||
@@ -45,7 +49,7 @@ export default function PhotoSection({ photos }: IPhotoSectionProps) {
                     </p>
                 }
             >
-                <PhotoList photos={photosData} />
+                <PhotoList photos={photosData} onPhotoClick={onPhotoClick} />
             </InfiniteScroll>
         </section>
     )

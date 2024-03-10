@@ -6,11 +6,11 @@ const appRouter = createBrowserRouter([
         children: [
             {
                 index: true,
-                lazy: () => import("../features/photos/pages/Home"),
+                lazy: () => import("../features/photos/pages/HomePage"),
             },
             {
                 path: "search/:query",
-                lazy: () => import("../features/photos/pages/Search"),
+                lazy: () => import("../features/photos/pages/SearchPage"),
             },
         ],
     },

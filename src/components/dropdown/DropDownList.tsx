@@ -13,7 +13,7 @@ export default function DropDownList({
     onItemClick,
 }: IDropDownList) {
     return (
-        <ul className="divide-y overflow-hidden rounded-md">
+        <ul className="divide-y overflow-hidden rounded-md text-lg font-medium">
             {menuItems.map((menuItem, index) => {
                 return (
                     <li key={index} onClick={() => onItemClick(index)}>

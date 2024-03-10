@@ -2,22 +2,29 @@ import { IconChevronDown } from "@tabler/icons-react"
 
 import type { ReactNode } from "react"
 import { twMerge } from "tailwind-merge"
+import Button from "../buttons/Button"
 
-interface IDropdownButton {
+import type { IButtonProps } from "../buttons/Button"
+
+interface IDropdownButton extends IButtonProps {
     children?: ReactNode
-    isOpen: boolean
-    onClick: () => void
+    isOpen?: boolean
+    onClick?: () => void
 }
 
 export default function DropdownButton({
     children,
     isOpen = false,
     onClick,
+    ...restProps
 }: IDropdownButton) {
     return (
-        <button
+        <Button
             onClick={onClick}
-            className="w-full h-[50px] flex justify-between items-center px-4 text-lg font-medium rounded-md border border-slate-300 bg-white hover:border-slate-800"
+            variant="outline"
+            size="large"
+            className="w-full justify-between"
+            {...restProps}
         >
             {children}
             <span
@@ -28,6 +35,6 @@ export default function DropdownButton({
             >
                 <IconChevronDown />
             </span>
-        </button>
+        </Button>
     )
 }
