@@ -2,9 +2,14 @@ import { Fragment, useState } from "react"
 import { useParams } from "react-router-dom"
 
 import { useInfinitePhotos } from "../api/useInfinitePhotos"
+import {
+    getPhotosData,
+    getPhotosLength,
+    getTotalPhotosLength,
+} from "../utils/photosUtil"
 
 import PhotoModal from "@/components/modal/PhotoModal"
-import { Filter, Header, PhotoSection, Title } from "../components"
+import { FilterSection, Header, PhotoSection, Title } from "../components"
 
 import type { IColorMenuItem, IMenuItem } from "@/components/dropdown/types"
 import type {
@@ -30,12 +35,16 @@ function SearchPage() {
     })
 
     const { query = "" } = useParams()
-    const photos = useInfinitePhotos({
+    const photosQuery = useInfinitePhotos({
         query,
         color: photoFilters.color,
         orientation: photoFilters.orientation,
         size: photoFilters.size,
     })
+
+    const totalPhotosLength = getTotalPhotosLength(photosQuery)
+    const photoLength = getPhotosLength(photosQuery)
+    const photos = getPhotosData(photosQuery)
 
     const handlePhotoClick = (photo: IPhoto) => {
         handleOpen()
@@ -78,15 +87,27 @@ function SearchPage() {
             <Header position="fixed" />
 
             <div className="flex flex-col max-w-7xl mx-auto px-4 mt-20 gap-8">
-                <Title>{query}</Title>
+                <Title>
+                    <span className="capitalize">{query}</span> images{" "}
+                    <span className="text-slate-500 text-4xl">(123)</span>
+                </Title>
 
-                <Filter
+                <FilterSection
                     onSelectOrientation={handleSelectOrientation}
                     onSelectSize={handleSelectSize}
                     onSelectColor={handleSelectColor}
                 />
 
-                <PhotoSection photos={photos} onPhotoClick={handlePhotoClick} />
+                <PhotoSection
+                    photos={photos}
+                    photosLength={photoLength}
+                    totalPhotosLength={totalPhotosLength}
+                    isLoading={photosQuery.isLoading}
+                    isError={photosQuery.isError}
+                    hasNextPage={photosQuery.hasNextPage}
+                    fetchNextPage={photosQuery.fetchNextPage}
+                    onPhotoClick={handlePhotoClick}
+                />
             </div>
 
             <div className="mt-20">footer</div>
@@ -103,3 +124,13 @@ function SearchPage() {
 export const Component = SearchPage
 
 // apply url when updating filter
+/*
+                photos: IPhotos[]
+    currentPhotosLength: number
+    totalPhotosLength: number
+    isLoading: boolean
+    isError: boolean
+    hasNextPage: boolean
+    onPhotoClick?: (photo: IPhoto) => void
+    fetchNextPage: () => void
+                */

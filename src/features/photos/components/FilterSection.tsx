@@ -15,7 +15,7 @@ interface IFilterSectionProps {
     onSelectColor: (data: IColorMenuItem<TPhotoColors | null>) => void
 }
 
-export default function Filter({
+export default function FilterSection({
     onSelectOrientation,
     onSelectSize,
     onSelectColor,

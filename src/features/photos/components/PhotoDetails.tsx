@@ -35,6 +35,7 @@ export default function PhotoDetails({ photo }: IPhotoDetails) {
                     className="mb-1 min-h-[30vh] max-h-[80vh]"
                     src={photo?.src.large}
                     alt={photo?.alt}
+                    loading="lazy"
                 />
             </div>
 

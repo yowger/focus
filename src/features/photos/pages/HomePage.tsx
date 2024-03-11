@@ -2,6 +2,11 @@ import { Fragment, useState } from "react"
 
 import { useEventListener } from "@/hooks/useEventListener"
 import { useInfiniteCuratedPhotos } from "../api/useInfiniteCuratedPhotos"
+import {
+    getPhotosData,
+    getPhotosLength,
+    getTotalPhotosLength,
+} from "../utils/photosUtil"
 
 import PhotoModal from "@/components/modal/PhotoModal"
 import Header from "../components/Header"
@@ -17,7 +22,11 @@ function HomePage() {
     const [headerPosition, setHeaderPosition] =
         useState<THeaderPosition>("absolute")
 
-    const photos = useInfiniteCuratedPhotos()
+    const photosQuery = useInfiniteCuratedPhotos()
+
+    const totalPhotosLength = getTotalPhotosLength(photosQuery)
+    const photoLength = getPhotosLength(photosQuery)
+    const photos = getPhotosData(photosQuery)
 
     const handlePhotoClick = (photo: IPhoto) => {
         handleOpen()
@@ -46,8 +55,18 @@ function HomePage() {
         <Fragment>
             <Header position={headerPosition} />
             <Hero />
+
             <div className="flex flex-col max-w-7xl mx-auto px-4">
-                <PhotoSection photos={photos} onPhotoClick={handlePhotoClick} />
+                <PhotoSection
+                    photos={photos}
+                    photosLength={photoLength}
+                    totalPhotosLength={totalPhotosLength}
+                    isLoading={photosQuery.isLoading}
+                    isError={photosQuery.isError}
+                    hasNextPage={photosQuery.hasNextPage}
+                    fetchNextPage={photosQuery.fetchNextPage}
+                    onPhotoClick={handlePhotoClick}
+                />
             </div>
 
             <PhotoModal

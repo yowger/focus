@@ -2,36 +2,38 @@ import InfiniteScroll from "react-infinite-scroll-component"
 
 import PhotoList from "./PhotoList"
 
-import type {
-    InfiniteData,
-    UseInfiniteQueryResult,
-} from "@tanstack/react-query"
-import type { IPhoto, IPhotos } from "../types/photoTypes"
+import type { IPhoto } from "../types/photoTypes"
 
 interface IPhotoSectionProps {
-    photos: UseInfiniteQueryResult<InfiniteData<IPhotos>>
+    photos: IPhoto[]
+    photosLength: number
+    totalPhotosLength: number
+    isLoading: boolean
+    isError: boolean
+    hasNextPage: boolean
     onPhotoClick?: (photo: IPhoto) => void
+    fetchNextPage: () => void
 }
 
-export default function PhotoSection({
+export default function Render({
     photos,
+    photosLength,
+    totalPhotosLength,
+    isLoading,
+    isError,
+    hasNextPage,
     onPhotoClick,
+    fetchNextPage,
 }: IPhotoSectionProps) {
-    const photosTotalLength = photos.data?.pages[0].total_results || 0
-    const photosLength =
-        photos.data?.pages.reduce((acc, page) => acc + page.photos.length, 0) ||
-        0
-    const photosData = photos.data?.pages.flatMap((page) => page.photos) || []
-
-    if (photos.isLoading) {
+    if (isLoading) {
         return <div>is loading...</div>
     }
 
-    if (photosTotalLength === 0) {
+    if (totalPhotosLength === 0) {
         return <div>No Photos found</div>
     }
 
-    if (photos.isError) {
+    if (isError) {
         return <div>Something went wrong, please try again</div>
     }
 
@@ -39,8 +41,8 @@ export default function PhotoSection({
         <section>
             <InfiniteScroll
                 dataLength={photosLength}
-                next={photos.fetchNextPage}
-                hasMore={photos.hasNextPage}
+                next={fetchNextPage}
+                hasMore={hasNextPage}
                 loader={<p>loading...</p>}
                 scrollThreshold="70%"
                 endMessage={
@@ -49,7 +51,7 @@ export default function PhotoSection({
                     </p>
                 }
             >
-                <PhotoList photos={photosData} onPhotoClick={onPhotoClick} />
+                <PhotoList photos={photos} onPhotoClick={onPhotoClick} />
             </InfiniteScroll>
         </section>
     )
