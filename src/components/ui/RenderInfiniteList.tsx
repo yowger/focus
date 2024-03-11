@@ -34,7 +34,7 @@ export default function RenderInfiniteList<T>({
         return <Loader />
     }
 
-    if (!isError) {
+    if (isError) {
         return error ? (
             error
         ) : (
