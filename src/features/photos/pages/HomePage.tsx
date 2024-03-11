@@ -1,17 +1,18 @@
 import { Fragment, useState } from "react"
 
-import { useEventListener } from "@/hooks/useEventListener"
-import { useInfiniteCuratedPhotos } from "../api/useInfiniteCuratedPhotos"
 import {
     getPhotosData,
     getPhotosLength,
     getTotalPhotosLength,
 } from "../utils/photosUtil"
+import { useEventListener } from "@/hooks/useEventListener"
+import { useInfiniteCuratedPhotos } from "../api/useInfiniteCuratedPhotos"
 
-import PhotoModal from "@/components/modal/PhotoModal"
 import Header from "../components/Header"
 import Hero from "../components/Hero"
-import PhotoSection from "../components/PhotoSection"
+import PhotoList from "../components/PhotoList"
+import PhotoModal from "@/components/modal/PhotoModal"
+import RenderInfiniteList from "@/components/ui/RenderInfiniteList"
 
 import type { THeaderPosition } from "../components/Header"
 import type { IPhoto } from "../types/photoTypes"
@@ -57,15 +58,20 @@ function HomePage() {
             <Hero />
 
             <div className="flex flex-col max-w-7xl mx-auto px-4">
-                <PhotoSection
-                    photos={photos}
-                    photosLength={photoLength}
-                    totalPhotosLength={totalPhotosLength}
+                <RenderInfiniteList
+                    data={photos}
+                    dataLength={photoLength}
+                    totalDataLength={totalPhotosLength}
                     isLoading={photosQuery.isLoading}
                     isError={photosQuery.isError}
                     hasNextPage={photosQuery.hasNextPage}
                     fetchNextPage={photosQuery.fetchNextPage}
-                    onPhotoClick={handlePhotoClick}
+                    renderComponent={(photos) => (
+                        <PhotoList
+                            photos={photos}
+                            onPhotoClick={handlePhotoClick}
+                        />
+                    )}
                 />
             </div>
 

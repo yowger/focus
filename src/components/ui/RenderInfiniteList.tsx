@@ -1,35 +1,33 @@
 import InfiniteScroll from "react-infinite-scroll-component"
 
-import PhotoList from "./PhotoList"
+import type { ReactNode } from "react"
 
-import type { IPhoto } from "../types/photoTypes"
-
-interface IPhotoSectionProps {
-    photos: IPhoto[]
-    photosLength: number
-    totalPhotosLength: number
+interface IRenderInfiniteList<T> {
+    data: T[]
+    dataLength: number
+    totalDataLength: number
     isLoading: boolean
     isError: boolean
     hasNextPage: boolean
-    onPhotoClick?: (photo: IPhoto) => void
     fetchNextPage: () => void
+    renderComponent: (data: T[]) => ReactNode
 }
 
-export default function Render({
-    photos,
-    photosLength,
-    totalPhotosLength,
+export default function RenderInfiniteList<T>({
+    data,
+    dataLength,
+    totalDataLength,
     isLoading,
     isError,
     hasNextPage,
-    onPhotoClick,
     fetchNextPage,
-}: IPhotoSectionProps) {
+    renderComponent,
+}: IRenderInfiniteList<T>) {
     if (isLoading) {
         return <div>is loading...</div>
     }
 
-    if (totalPhotosLength === 0) {
+    if (totalDataLength === 0) {
         return <div>No Photos found</div>
     }
 
@@ -40,7 +38,7 @@ export default function Render({
     return (
         <section>
             <InfiniteScroll
-                dataLength={photosLength}
+                dataLength={dataLength}
                 next={fetchNextPage}
                 hasMore={hasNextPage}
                 loader={<p>loading...</p>}
@@ -51,7 +49,7 @@ export default function Render({
                     </p>
                 }
             >
-                <PhotoList photos={photos} onPhotoClick={onPhotoClick} />
+                {renderComponent(data)}
             </InfiniteScroll>
         </section>
     )

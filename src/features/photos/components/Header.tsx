@@ -1,8 +1,8 @@
+import { Link } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
 
 import Logo from "./Logo"
 import SearchBar from "./SearchBar"
-import { Link } from "react-router-dom"
 
 const headerStyles = {
     container: {

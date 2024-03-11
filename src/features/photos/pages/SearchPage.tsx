@@ -1,15 +1,17 @@
 import { Fragment, useState } from "react"
 import { useParams } from "react-router-dom"
 
-import { useInfinitePhotos } from "../api/useInfinitePhotos"
 import {
     getPhotosData,
     getPhotosLength,
     getTotalPhotosLength,
 } from "../utils/photosUtil"
+import { useInfinitePhotos } from "../api/useInfinitePhotos"
 
+import { FilterSection, Header, Title } from "../components"
 import PhotoModal from "@/components/modal/PhotoModal"
-import { FilterSection, Header, PhotoSection, Title } from "../components"
+import PhotoList from "../components/PhotoList"
+import RenderInfiniteList from "@/components/ui/RenderInfiniteList"
 
 import type { IColorMenuItem, IMenuItem } from "@/components/dropdown/types"
 import type {
@@ -89,7 +91,9 @@ function SearchPage() {
             <div className="flex flex-col max-w-7xl mx-auto px-4 mt-20 gap-8">
                 <Title>
                     <span className="capitalize">{query}</span> images{" "}
-                    <span className="text-slate-500 text-4xl">(123)</span>
+                    <span className="text-slate-500 text-4xl">
+                        ({totalPhotosLength})
+                    </span>
                 </Title>
 
                 <FilterSection
@@ -98,15 +102,20 @@ function SearchPage() {
                     onSelectColor={handleSelectColor}
                 />
 
-                <PhotoSection
-                    photos={photos}
-                    photosLength={photoLength}
-                    totalPhotosLength={totalPhotosLength}
+                <RenderInfiniteList
+                    data={photos}
+                    dataLength={photoLength}
+                    totalDataLength={totalPhotosLength}
                     isLoading={photosQuery.isLoading}
                     isError={photosQuery.isError}
                     hasNextPage={photosQuery.hasNextPage}
                     fetchNextPage={photosQuery.fetchNextPage}
-                    onPhotoClick={handlePhotoClick}
+                    renderComponent={(photos) => (
+                        <PhotoList
+                            photos={photos}
+                            onPhotoClick={handlePhotoClick}
+                        />
+                    )}
                 />
             </div>
 
