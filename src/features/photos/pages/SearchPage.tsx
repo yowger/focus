@@ -105,7 +105,6 @@ function SearchPage() {
                 <RenderInfiniteList
                     data={photos}
                     dataLength={photoLength}
-                    totalDataLength={totalPhotosLength}
                     isLoading={photosQuery.isLoading}
                     isError={photosQuery.isError}
                     hasNextPage={photosQuery.hasNextPage}

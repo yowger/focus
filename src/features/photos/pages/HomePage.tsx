@@ -3,7 +3,6 @@ import { Fragment, useState } from "react"
 import {
     getPhotosData,
     getPhotosLength,
-    getTotalPhotosLength,
 } from "../utils/photosUtil"
 import { useEventListener } from "@/hooks/useEventListener"
 import { useInfiniteCuratedPhotos } from "../api/useInfiniteCuratedPhotos"
@@ -25,7 +24,6 @@ function HomePage() {
 
     const photosQuery = useInfiniteCuratedPhotos()
 
-    const totalPhotosLength = getTotalPhotosLength(photosQuery)
     const photoLength = getPhotosLength(photosQuery)
     const photos = getPhotosData(photosQuery)
 
@@ -61,7 +59,6 @@ function HomePage() {
                 <RenderInfiniteList
                     data={photos}
                     dataLength={photoLength}
-                    totalDataLength={totalPhotosLength}
                     isLoading={photosQuery.isLoading}
                     isError={photosQuery.isError}
                     hasNextPage={photosQuery.hasNextPage}
