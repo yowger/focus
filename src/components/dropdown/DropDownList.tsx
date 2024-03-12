@@ -4,7 +4,7 @@ import type { IMenuItem } from "./types"
 interface IDropDownList {
     menuItems: IMenuItem<string | null>[]
     activeIndex: number
-    onItemClick: (activeIndex: number) => void
+    onItemClick?: (activeIndex: number) => void
 }
 
 export default function DropDownList({
@@ -12,11 +12,18 @@ export default function DropDownList({
     activeIndex,
     onItemClick,
 }: IDropDownList) {
+    const handleItemClick = (activeIndex: number) => {
+        if (onItemClick) onItemClick(activeIndex)
+    }
+
     return (
         <ul className="divide-y overflow-hidden rounded-md text-lg font-medium">
             {menuItems.map((menuItem, index) => {
                 return (
-                    <li key={index} onClick={() => onItemClick(index)}>
+                    <li
+                        key={index}
+                        onClick={() => handleItemClick(activeIndex)}
+                    >
                         <DropDownItem
                             label={menuItem.label}
                             active={index === activeIndex}

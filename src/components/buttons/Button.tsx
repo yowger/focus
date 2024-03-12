@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge"
 
 import type { ButtonHTMLAttributes } from "react"
 
-type TButtonVariant = "primary" | "danger" | "ghost" | "outline"
+type TButtonVariant = "primary" | "danger" | "ghost" | "outline" | "ghost-invert"
 type TButtonSize = "small" | "normal" | "large"
 type TButtonRoundness = "normal" | "full"
 
@@ -21,7 +21,8 @@ const buttonStyles = {
     variant: {
         primary: "bg-teal-600 hover:bg-teal-700 text-white focus:bg-teal-700",
         danger: "bg-red-600 hover:bg-red-700 text-white focus:bg-red-700",
-        ghost: "text-slate-600 hover:bg-slate-100 focus:bg-slate-700",
+        ghost: "text-slate-600",
+        "ghost-invert": "text-white hover:text-neutral-500",
         outline:
             "border border-stone-300 hover:border-stone-500 focus:border-stone-500",
     },

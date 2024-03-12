@@ -1,27 +1,43 @@
 import { Fragment, useEffect, useRef } from "react"
 import ReactDom from "react-dom"
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react"
 
 import { useEventListener } from "@/hooks/useEventListener"
 import { useOnClickOutside } from "@/hooks/useOnClickOutside"
 import { useScrollLock } from "@/hooks/useScrollLock"
+import { useScrollbarWidth } from "@/hooks/useScrollbarWidth"
 
+import PhotoDetails from "@/features/photos/components/PhotoDetails"
+import Button from "../buttons/Button"
 import ModalOverlay from "./ModalOverlay"
 
 import type { IPhoto } from "@/features/photos/types/photoTypes"
-import PhotoDetails from "@/features/photos/components/PhotoDetails"
 
 interface IModalProps {
     isOpen: boolean
     photo: IPhoto | null
+    hasNext?: boolean
+    hasPrev?: boolean
     onClose: () => void
+    onLeftClick: () => void
+    onRightClick: () => void
 }
 
-export default function PhotoModal({ isOpen, onClose, photo }: IModalProps) {
+export default function PhotoModal({
+    isOpen,
+    photo,
+    hasNext = false,
+    hasPrev = false,
+    onClose,
+    onLeftClick,
+    onRightClick,
+}: IModalProps) {
     const modalRef = useRef<HTMLDivElement>(null)
 
     const { lock, unlock } = useScrollLock({
         autoLock: false,
     })
+    const scrollBarWidth = useScrollbarWidth()
 
     const handleClose = () => {
         unlock()
@@ -45,6 +61,7 @@ export default function PhotoModal({ isOpen, onClose, photo }: IModalProps) {
         if (isOpen) {
             lock()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen])
 
     if (!isOpen || !photo) return null
@@ -52,11 +69,33 @@ export default function PhotoModal({ isOpen, onClose, photo }: IModalProps) {
     return ReactDom.createPortal(
         <Fragment>
             <ModalOverlay>
-                <div
-                    ref={modalRef}
-                    className="w-[78%] absolute bg-white rounded-lg px-5 py-4 mt-7"
-                >
-                    <PhotoDetails photo={photo} />
+                <div className="w-[78%] absolute" ref={modalRef}>
+                    <div className="relative bg-white rounded-lg px-5 py-4 mt-7">
+                        <PhotoDetails photo={photo} />
+                        {hasPrev && (
+                            <Button
+                                onClick={onLeftClick}
+                                className="fixed top-[40%] left-[10px]"
+                                variant="ghost-invert"
+                                size="large"
+                            >
+                                <IconChevronLeft size={42} />
+                            </Button>
+                        )}
+                        {hasNext && (
+                            <Button
+                                onClick={onRightClick}
+                                className="fixed top-[40%] right-0"
+                                style={{
+                                    right: `calc(10px + ${scrollBarWidth}px)`,
+                                }}
+                                variant="ghost-invert"
+                                size="large"
+                            >
+                                <IconChevronRight size={42} />
+                            </Button>
+                        )}
+                    </div>
                 </div>
             </ModalOverlay>
         </Fragment>,

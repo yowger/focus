@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge"
 
 interface IDropDownMenu {
     className?: ComponentProps<"div">["className"]
-    children: ReactNode
+    children?: ReactNode
 }
 
 export default function DropDownMenu({ className, children }: IDropDownMenu) {

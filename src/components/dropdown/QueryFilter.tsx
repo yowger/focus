@@ -3,12 +3,12 @@ import { Fragment, useRef, useState } from "react"
 import { useOnClickOutside } from "@/hooks/useOnClickOutside"
 
 import DropdownButton from "./DropDownButton"
+import DropDownColorList from "./DropDownColorList"
 import DropDownMenu from "./DropDownMenu"
 import DropDownList from "./DropDownList"
 
 import { isColorMenu } from "./types"
 import type { TVariant, TMenuItems } from "./types"
-import DropDownColorList from "./DropDownColorList"
 
 interface IQueryFilter<V extends TVariant, T extends string> {
     initialActiveIndex: number

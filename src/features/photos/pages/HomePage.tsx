@@ -1,31 +1,30 @@
-import { Fragment, useState } from "react"
+import { Fragment, useEffect, useMemo, useState } from "react"
 
-import {
-    getPhotosData,
-    getPhotosLength,
-} from "../utils/photosUtil"
 import { useEventListener } from "@/hooks/useEventListener"
 import { useInfiniteCuratedPhotos } from "../api/useInfiniteCuratedPhotos"
 
+import PhotoModal from "@/components/modal/PhotoModal"
+import RenderInfiniteList from "@/components/ui/RenderInfiniteList"
 import Header from "../components/Header"
 import Hero from "../components/Hero"
 import PhotoList from "../components/PhotoList"
-import PhotoModal from "@/components/modal/PhotoModal"
-import RenderInfiniteList from "@/components/ui/RenderInfiniteList"
 
 import type { THeaderPosition } from "../components/Header"
 import type { IPhoto } from "../types/photoTypes"
 
 function HomePage() {
-    const [open, setOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
+    const [hasNext, setHasNext] = useState(false)
+    const [hasPrev, setHasPrev] = useState(false)
     const [selectedPhoto, setSelectedPhoto] = useState<IPhoto | null>(null)
     const [headerPosition, setHeaderPosition] =
         useState<THeaderPosition>("absolute")
 
     const photosQuery = useInfiniteCuratedPhotos()
 
-    const photoLength = getPhotosLength(photosQuery)
-    const photos = getPhotosData(photosQuery)
+    const photos = useMemo(() => {
+        return photosQuery.data?.pages.flatMap((page) => page.photos) || []
+    }, [photosQuery.data?.pages])
 
     const handlePhotoClick = (photo: IPhoto) => {
         handleOpen()
@@ -33,11 +32,11 @@ function HomePage() {
     }
 
     const handleClose = () => {
-        setOpen(false)
+        setIsOpen(false)
     }
 
     const handleOpen = () => {
-        setOpen(true)
+        setIsOpen(true)
     }
 
     const changeHeaderPosition = () => {
@@ -47,6 +46,48 @@ function HomePage() {
             setHeaderPosition("absolute")
         }
     }
+
+    const handleLeftClick = () => {
+        if (!selectedPhoto) return
+
+        const photoIndex = photos.findIndex(
+            (photo) => photo.id === selectedPhoto.id
+        )
+
+        const prevPhotoIndex = photos[photoIndex - 1]
+
+        setSelectedPhoto(prevPhotoIndex)
+    }
+
+    const handleRightClick = () => {
+        if (!selectedPhoto) return
+
+        const photoIndex = photos.findIndex(
+            (photo) => photo.id === selectedPhoto.id
+        )
+
+        const nextPhotoIndex = photos[photoIndex + 1]
+
+        setSelectedPhoto(nextPhotoIndex)
+
+        if (photos.length - 5 === photoIndex && photosQuery.hasNextPage) {
+            photosQuery.fetchNextPage()
+        }
+    }
+
+    useEffect(() => {
+        if (selectedPhoto) {
+            const photoIndex = photos.findIndex(
+                (photo) => photo.id === selectedPhoto.id
+            )
+
+            const nextPhotoExist = photos[photoIndex + 1] !== undefined
+            const nextPrevExist = photos[photoIndex - 1] !== undefined
+
+            setHasNext(nextPhotoExist)
+            setHasPrev(nextPrevExist)
+        }
+    }, [selectedPhoto, photos])
 
     useEventListener("scroll", changeHeaderPosition)
 
@@ -58,7 +99,7 @@ function HomePage() {
             <div className="flex flex-col max-w-7xl mx-auto px-4">
                 <RenderInfiniteList
                     data={photos}
-                    dataLength={photoLength}
+                    dataLength={photos.length}
                     isLoading={photosQuery.isLoading}
                     isError={photosQuery.isError}
                     hasNextPage={photosQuery.hasNextPage}
@@ -73,9 +114,13 @@ function HomePage() {
             </div>
 
             <PhotoModal
-                isOpen={open}
-                onClose={handleClose}
+                isOpen={isOpen}
                 photo={selectedPhoto}
+                hasNext={hasNext}
+                hasPrev={hasPrev}
+                onClose={handleClose}
+                onLeftClick={handleLeftClick}
+                onRightClick={handleRightClick}
             />
         </Fragment>
     )

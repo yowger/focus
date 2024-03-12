@@ -52,7 +52,7 @@ export default function RenderInfiniteList<T>({
                 dataLength={dataLength}
                 next={fetchNextPage}
                 hasMore={hasNextPage}
-                loader={isLoading && <Loader />}
+                loader={<Loader />}
                 {...options}
             >
                 {renderComponent(data)}

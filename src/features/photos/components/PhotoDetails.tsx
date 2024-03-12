@@ -14,8 +14,8 @@ interface IPhotoDetails {
 export default function PhotoDetails({ photo }: IPhotoDetails) {
     return (
         <div>
-            <div className="flex justify-between mb-5 items-center">
-                <p className="text-lg font-medium tracking-wide mr-10 leading-6">
+            <div className="flex flex-col md:flex-row md:justify-between mb-5 items-center">
+                <p className="text-lg font-medium tracking-wide mr-10 leading-6 text-center md:text-left">
                     {photo?.alt}
                 </p>
 

@@ -1,17 +1,15 @@
-import { Fragment, useState } from "react"
+import { Fragment, useEffect, useMemo, useState } from "react"
 import { useParams } from "react-router-dom"
 
-import {
-    getPhotosData,
-    getPhotosLength,
-    getTotalPhotosLength,
-} from "../utils/photosUtil"
+import { colorItems, orientationItems, sizeItems } from "../data/PhotoFilters"
+
 import { useInfinitePhotos } from "../api/useInfinitePhotos"
 
-import { FilterSection, Header, Title } from "../components"
+import QueryFilter from "@/components/dropdown/QueryFilter"
 import PhotoModal from "@/components/modal/PhotoModal"
-import PhotoList from "../components/PhotoList"
 import RenderInfiniteList from "@/components/ui/RenderInfiniteList"
+import { Header, Title } from "../components"
+import PhotoList from "../components/PhotoList"
 
 import type { IColorMenuItem, IMenuItem } from "@/components/dropdown/types"
 import type {
@@ -28,7 +26,9 @@ interface IPhotoFilters {
 }
 
 function SearchPage() {
-    const [open, setOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
+    const [hasNext, setHasNext] = useState(false)
+    const [hasPrev, setHasPrev] = useState(false)
     const [selectedPhoto, setSelectedPhoto] = useState<IPhoto | null>(null)
     const [photoFilters, setPhotoFilters] = useState<IPhotoFilters>({
         orientation: null,
@@ -44,9 +44,12 @@ function SearchPage() {
         size: photoFilters.size,
     })
 
-    const totalPhotosLength = getTotalPhotosLength(photosQuery)
-    const photoLength = getPhotosLength(photosQuery)
-    const photos = getPhotosData(photosQuery)
+    const photos = useMemo(() => {
+        return photosQuery.data?.pages.flatMap((page) => page.photos) || []
+    }, [photosQuery.data?.pages])
+    const totalPhotosLength = useMemo(() => {
+        return photosQuery?.data?.pages[0].total_results || 0
+    }, [photosQuery.data?.pages])
 
     const handlePhotoClick = (photo: IPhoto) => {
         handleOpen()
@@ -54,11 +57,11 @@ function SearchPage() {
     }
 
     const handleClose = () => {
-        setOpen(false)
+        setIsOpen(false)
     }
 
     const handleOpen = () => {
-        setOpen(true)
+        setIsOpen(true)
     }
 
     const handleSelectOrientation = (
@@ -84,6 +87,48 @@ function SearchPage() {
         })
     }
 
+    const handleLeftClick = () => {
+        if (!selectedPhoto) return
+
+        const photoIndex = photos.findIndex(
+            (photo) => photo.id === selectedPhoto.id
+        )
+
+        const prevPhotoIndex = photos[photoIndex - 1]
+
+        setSelectedPhoto(prevPhotoIndex)
+    }
+
+    const handleRightClick = () => {
+        if (!selectedPhoto) return
+
+        const photoIndex = photos.findIndex(
+            (photo) => photo.id === selectedPhoto.id
+        )
+
+        const nextPhotoIndex = photos[photoIndex + 1]
+
+        setSelectedPhoto(nextPhotoIndex)
+
+        if (photos.length - 5 === photoIndex && photosQuery.hasNextPage) {
+            photosQuery.fetchNextPage()
+        }
+    }
+
+    useEffect(() => {
+        if (selectedPhoto) {
+            const photoIndex = photos.findIndex(
+                (photo) => photo.id === selectedPhoto.id
+            )
+
+            const nextPhotoExist = photos[photoIndex + 1] !== undefined
+            const nextPrevExist = photos[photoIndex - 1] !== undefined
+
+            setHasNext(nextPhotoExist)
+            setHasPrev(nextPrevExist)
+        }
+    }, [selectedPhoto, photos])
+
     return (
         <Fragment>
             <Header position="fixed" />
@@ -96,15 +141,29 @@ function SearchPage() {
                     </span>
                 </Title>
 
-                <FilterSection
-                    onSelectOrientation={handleSelectOrientation}
-                    onSelectSize={handleSelectSize}
-                    onSelectColor={handleSelectColor}
-                />
+                <div className="grid grid-cols-3 gap-5">
+                    <QueryFilter<"default", TPhotoOrientations>
+                        menuItems={orientationItems}
+                        initialActiveIndex={0}
+                        onSelect={handleSelectOrientation}
+                    />
+
+                    <QueryFilter<"default", TPhotoSizes>
+                        menuItems={sizeItems}
+                        initialActiveIndex={0}
+                        onSelect={handleSelectSize}
+                    />
+
+                    <QueryFilter<"color", TPhotoColors>
+                        menuItems={colorItems}
+                        initialActiveIndex={0}
+                        onSelect={handleSelectColor}
+                    />
+                </div>
 
                 <RenderInfiniteList
                     data={photos}
-                    dataLength={photoLength}
+                    dataLength={photos.length}
                     isLoading={photosQuery.isLoading}
                     isError={photosQuery.isError}
                     hasNextPage={photosQuery.hasNextPage}
@@ -121,24 +180,16 @@ function SearchPage() {
             <div className="mt-20">footer</div>
 
             <PhotoModal
-                isOpen={open}
-                onClose={handleClose}
+                isOpen={isOpen}
                 photo={selectedPhoto}
+                hasNext={hasNext}
+                hasPrev={hasPrev}
+                onClose={handleClose}
+                onLeftClick={handleLeftClick}
+                onRightClick={handleRightClick}
             />
         </Fragment>
     )
 }
 
 export const Component = SearchPage
-
-// apply url when updating filter
-/*
-                photos: IPhotos[]
-    currentPhotosLength: number
-    totalPhotosLength: number
-    isLoading: boolean
-    isError: boolean
-    hasNextPage: boolean
-    onPhotoClick?: (photo: IPhoto) => void
-    fetchNextPage: () => void
-                */
