@@ -7,7 +7,7 @@ import { useInfinitePhotos } from "../api/useInfinitePhotos"
 
 import QueryFilter from "@/components/dropdown/QueryFilter"
 import PhotoModal from "@/components/modal/PhotoModal"
-import RenderInfiniteList from "@/components/ui/RenderInfiniteList"
+import RenderInfiniteList from "@/components/generic/RenderInfiniteList"
 import { Header, Title } from "../components"
 import PhotoList from "../components/PhotoList"
 

@@ -4,7 +4,7 @@ import { useEventListener } from "@/hooks/useEventListener"
 import { useInfiniteCuratedPhotos } from "../api/useInfiniteCuratedPhotos"
 
 import PhotoModal from "@/components/modal/PhotoModal"
-import RenderInfiniteList from "@/components/ui/RenderInfiniteList"
+import RenderInfiniteList from "@/components/generic/RenderInfiniteList"
 import Header from "../components/Header"
 import Hero from "../components/Hero"
 import PhotoList from "../components/PhotoList"

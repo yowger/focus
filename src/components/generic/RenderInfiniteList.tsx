@@ -1,6 +1,6 @@
 import InfiniteScroll from "react-infinite-scroll-component"
 
-import Loader from "./Loader"
+import Loader from "../loader/Loader"
 
 import type { ReactNode } from "react"
 import type { Props } from "react-infinite-scroll-component"

@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
 
 import { useOnClickOutside } from "@/hooks/useOnClickOutside"
+import { useLocalStorage } from "@/hooks/useLocalStorage"
+
+import Button from "@/components/buttons/Button"
+import DropDownMenu from "@/components/dropdown/DropDownMenu"
 
 import type { KeyboardEvent } from "react"
 
@@ -39,11 +43,17 @@ export default function SearchBar({ size = "medium" }: ISearchBarProps) {
     const searchBarContainerRef = useRef<HTMLDivElement>(null)
 
     const navigate = useNavigate()
+    const [history, setHistory] = useLocalStorage<string[]>(
+        "photo-search-history",
+        []
+    )
 
     const handleSearch = () => {
         if (!searchRef.current) return
 
         const query = searchRef.current.value.trim().toLowerCase()
+
+        setHistory((preHistory) => [...preHistory, query])
 
         if (query) {
             navigate(`/search/${query}`)
@@ -54,6 +64,14 @@ export default function SearchBar({ size = "medium" }: ISearchBarProps) {
         if (event.key === "Enter") {
             handleSearch()
         }
+    }
+
+    const handleSearchHistory = (query: string) => {
+        navigate(`/search/${query}`)
+    }
+
+    const handleClearHistory = () => {
+        setHistory([])
     }
 
     const handleFocus = () => {
@@ -67,36 +85,76 @@ export default function SearchBar({ size = "medium" }: ISearchBarProps) {
     useOnClickOutside(searchBarContainerRef, handleClickOutside)
 
     return (
-        <div
-            ref={searchBarContainerRef}
-            className={twMerge(
-                isFocused ? "bg-white" : "bg-neutral-100 border-neutral-100",
-                searchBarStyles.container.size[size],
-                searchBarStyles.container.base
-            )}
-            onFocus={handleFocus}
-        >
-            <input
-                ref={searchRef}
-                onKeyDown={handleEnter}
-                type="search"
-                placeholder="Search for photos"
+        <div ref={searchBarContainerRef} className="relative">
+            <div
                 className={twMerge(
-                    isFocused ? "bg-white" : "bg-transparent",
-                    searchBarStyles.input.size[size],
-                    searchBarStyles.input.base
+                    isFocused
+                        ? "bg-white border-stone-300"
+                        : "bg-neutral-100 border-stone-100",
+                    searchBarStyles.container.size[size],
+                    searchBarStyles.container.base
                 )}
-            />
-            <button
-                type="submit"
-                onClick={handleSearch}
-                className={twMerge(
-                    isFocused ? "bg-white border-l" : "bg-transparent",
-                    searchBarStyles.searchButton.base
-                )}
+                onFocus={handleFocus}
             >
-                <IconSearch className="m-auto" />
-            </button>
+                <input
+                    ref={searchRef}
+                    onKeyDown={handleEnter}
+                    type="search"
+                    placeholder="Search for photos"
+                    className={twMerge(
+                        isFocused ? "bg-white" : "bg-transparent",
+                        searchBarStyles.input.size[size],
+                        searchBarStyles.input.base
+                    )}
+                />
+                <button
+                    type="submit"
+                    onClick={handleSearch}
+                    className={twMerge(
+                        isFocused
+                            ? "bg-white border-l rounded-r-md"
+                            : "bg-transparent",
+                        searchBarStyles.searchButton.base
+                    )}
+                >
+                    <IconSearch className="m-auto" />
+                </button>
+            </div>
+
+            {isFocused && history.length > 0 && (
+                <DropDownMenu className="p-4 shadow-sm">
+                    <div className="flex flex-col gap-3">
+                        <div className="flex justify-between">
+                            <p className="mr-2 font-medium">Recent searches</p>
+                            <Button
+                                onClick={handleClearHistory}
+                                variant="link"
+                                className="text-slate-500 hover:text-slate-800 "
+                            >
+                                clear
+                            </Button>
+                        </div>
+
+                        <div>
+                            <ul className="flex gap-2 flex-wrap">
+                                {history.map((query, index) => (
+                                    <li key={`$search-query-${index}`}>
+                                        <Button
+                                            onClick={() =>
+                                                handleSearchHistory(query)
+                                            }
+                                            variant="link"
+                                            className="border px-2 py-1 rounded-md cursor-pointer hover:bg-gray-100"
+                                        >
+                                            {query}
+                                        </Button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </DropDownMenu>
+            )}
         </div>
     )
 }
