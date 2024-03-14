@@ -3,7 +3,13 @@ import { twMerge } from "tailwind-merge"
 
 import type { ButtonHTMLAttributes } from "react"
 
-type TButtonVariant = "primary" | "danger" | "ghost" | "outline" | "ghost-invert" | "link"
+type TButtonVariant =
+    | "primary"
+    | "danger"
+    | "ghost"
+    | "outline"
+    | "ghost-invert"
+    | "link"
 type TButtonSize = "small" | "normal" | "large"
 type TButtonRoundness = "normal" | "full"
 
@@ -25,7 +31,7 @@ const buttonStyles = {
         "ghost-invert": "text-white hover:text-neutral-500",
         outline:
             "border border-stone-300 hover:border-stone-500 focus:border-stone-500",
-        link: "p-0 p-0 h-min font-normal font-normal"
+        link: "p-0 p-0 h-min font-normal font-normal",
     },
 }
 
@@ -44,7 +50,7 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>(
             roundness = "normal",
             className,
             children,
-            ...otherProps
+            ...restProps
         },
         ref
     ) => {
@@ -58,7 +64,7 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>(
                     buttonStyles.variant[variant],
                     className
                 )}
-                {...otherProps}
+                {...restProps}
             >
                 {children}
             </button>

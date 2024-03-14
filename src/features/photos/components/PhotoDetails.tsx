@@ -1,17 +1,43 @@
-import Button from "@/components/buttons/Button"
+import { useEffect } from "react"
 import { IconHeartFilled, IconShare } from "@tabler/icons-react"
 
-import { photoDownloadItems } from "../data/PhotoDownloadList"
-
+import Button from "@/components/buttons/Button"
 import ButtonDropdown from "@/components/buttons/ButtonDropdown"
 
+import type { IButtonListItem } from "@/components/buttons/types"
 import type { IPhoto } from "../types/photoTypes"
 
 interface IPhotoDetails {
     photo: IPhoto
+    onDownloadImage: (imageUrl: string, imageName: string) => void
 }
 
-export default function PhotoDetails({ photo }: IPhotoDetails) {
+export default function PhotoDetails({
+    photo,
+    onDownloadImage,
+}: IPhotoDetails) {
+    const photoDownloadItems: IButtonListItem[] = []
+
+    useEffect(() => {
+        for (const key in photo.src) {
+            const sourceKey = key as keyof typeof photo.src
+            const imageUrl = photo.src[sourceKey]
+            const imageName = photo.alt + "-" + photo.id + "-" + sourceKey
+
+            photoDownloadItems.push({
+                label: key,
+                function: () => onDownloadImage(imageUrl, imageName),
+            })
+        }
+    }, [photo, photoDownloadItems])
+
+    const handleDownloadOriginal = () => {
+        const imageUrl = photo.src["original"]
+        const imageName = photo.alt + "-" + photo.id + "-" + "original"
+
+        onDownloadImage(imageUrl, imageName)
+    }
+
     return (
         <div>
             <div className="flex flex-col md:flex-row md:justify-between mb-5 items-center">
@@ -24,6 +50,7 @@ export default function PhotoDetails({ photo }: IPhotoDetails) {
                         <IconHeartFilled className="text-gray-500" size={20} />
                     </Button>
                     <ButtonDropdown
+                        buttonFunction={handleDownloadOriginal}
                         buttonLabel="Download free"
                         buttonItemList={photoDownloadItems}
                     />

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { IconChevronDown } from "@tabler/icons-react"
 import { twMerge } from "tailwind-merge"
 
@@ -8,6 +8,7 @@ import DropDownMenu from "../dropdown/DropDownMenu"
 
 import type { ReactNode } from "react"
 import type { IButtonListItem } from "./types"
+import { useOnClickOutside } from "@/hooks/useOnClickOutside"
 
 interface IButtonDropdownProps {
     buttonLabel: ReactNode
@@ -21,13 +22,20 @@ export default function ButtonDropdown({
     buttonFunction,
 }: IButtonDropdownProps) {
     const [isOpen, setIsOpen] = useState(false)
+    const buttonDropDownRef = useRef<HTMLDivElement>(null)
 
     const handleButtonMenuState = () => {
         setIsOpen((prev) => !prev)
     }
 
+    const handleClickOutside = () => {
+        setIsOpen(false)
+    }
+
+    useOnClickOutside(buttonDropDownRef, handleClickOutside)
+
     return (
-        <div className="relative">
+        <div ref={buttonDropDownRef} className="relative">
             <div className="flex">
                 <Button
                     onClick={buttonFunction}

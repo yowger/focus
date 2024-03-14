@@ -19,6 +19,7 @@ interface IModalProps {
     hasNext?: boolean
     hasPrev?: boolean
     onClose: () => void
+    onDownloadImage: (imageUrl: string, imageName: string) => void
     onLeftClick: () => void
     onRightClick: () => void
 }
@@ -29,6 +30,7 @@ export default function PhotoModal({
     hasNext = false,
     hasPrev = false,
     onClose,
+    onDownloadImage,
     onLeftClick,
     onRightClick,
 }: IModalProps) {
@@ -71,7 +73,10 @@ export default function PhotoModal({
             <ModalOverlay>
                 <div className="w-[78%] absolute" ref={modalRef}>
                     <div className="relative bg-white rounded-lg px-5 py-4 mt-7">
-                        <PhotoDetails photo={photo} />
+                        <PhotoDetails
+                            photo={photo}
+                            onDownloadImage={onDownloadImage}
+                        />
                         {hasPrev && (
                             <Button
                                 onClick={onLeftClick}

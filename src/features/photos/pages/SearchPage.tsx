@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 
 import { colorItems, orientationItems, sizeItems } from "../data/PhotoFilters"
 
+import { download } from "@/utils/mediaUtils"
 import { useInfinitePhotos } from "../api/useInfinitePhotos"
 
 import QueryFilter from "@/components/dropdown/QueryFilter"
@@ -85,6 +86,10 @@ function SearchPage() {
             ...photoFilters,
             color: item.value,
         })
+    }
+
+    const handleDownloadImage = (imageUrl: string, imageName: string) => {
+        download(imageUrl, imageName)
     }
 
     const handleLeftClick = () => {
@@ -185,6 +190,7 @@ function SearchPage() {
                 hasNext={hasNext}
                 hasPrev={hasPrev}
                 onClose={handleClose}
+                onDownloadImage={handleDownloadImage}
                 onLeftClick={handleLeftClick}
                 onRightClick={handleRightClick}
             />

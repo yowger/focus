@@ -12,9 +12,15 @@ interface IDropdownButtonItem extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode
 }
 
-export default function ButtonListItem({ children }: IDropdownButtonItem) {
+export default function ButtonListItem({
+    children,
+    ...restProps
+}: IDropdownButtonItem) {
     return (
-        <div className={twMerge(itemStyles.base, itemStyles.size.normal)}>
+        <div
+            className={twMerge(itemStyles.base, itemStyles.size.normal)}
+            {...restProps}
+        >
             {children}
         </div>
     )

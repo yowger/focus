@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useMemo, useState } from "react"
 
 import { useEventListener } from "@/hooks/useEventListener"
+import { download } from "@/utils/mediaUtils"
 import { useInfiniteCuratedPhotos } from "../api/useInfiniteCuratedPhotos"
 
 import PhotoModal from "@/components/modal/PhotoModal"
@@ -45,6 +46,10 @@ function HomePage() {
         } else {
             setHeaderPosition("absolute")
         }
+    }
+
+    const handleDownloadImage = (imageUrl: string, imageName: string) => {
+        download(imageUrl, imageName)
     }
 
     const handleLeftClick = () => {
@@ -119,6 +124,7 @@ function HomePage() {
                 hasNext={hasNext}
                 hasPrev={hasPrev}
                 onClose={handleClose}
+                onDownloadImage={handleDownloadImage}
                 onLeftClick={handleLeftClick}
                 onRightClick={handleRightClick}
             />
