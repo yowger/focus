@@ -1,9 +1,9 @@
 import ButtonListItem from "./ButtonListItem"
 
-import type { TButtonItem } from "./types"
+import type { IButtonListItem } from "./types"
 
 interface IButtonDropdownListProps {
-    buttonItemList: TButtonItem[]
+    buttonItemList: IButtonListItem[]
 }
 
 export default function ButtonDropdownList({
