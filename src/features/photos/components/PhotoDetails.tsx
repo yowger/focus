@@ -19,23 +19,29 @@ export default function PhotoDetails({
     const photoDownloadItems: IButtonListItem[] = []
 
     useEffect(() => {
-        for (const key in photo.src) {
-            const sourceKey = key as keyof typeof photo.src
-            const imageUrl = photo.src[sourceKey]
-            const imageName = photo.alt + "-" + photo.id + "-" + sourceKey
+        function createPhotoDownloadItems() {
+            Object.entries(photo.src).forEach(([key, imageUrl]) => {
+                const imageName = [photo.alt, photo.id, key]
+                    .filter(Boolean)
+                    .join("-")
 
-            photoDownloadItems.push({
-                label: key,
-                function: () => onDownloadImage(imageUrl, imageName),
+                photoDownloadItems.push({
+                    label: key,
+                    function: () => onDownloadImage(imageUrl, imageName),
+                })
             })
         }
+
+        createPhotoDownloadItems()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [photo, photoDownloadItems])
 
     const handleDownloadOriginal = () => {
-        const imageUrl = photo.src["original"]
-        const imageName = photo.alt + "-" + photo.id + "-" + "original"
+        const imageName = [photo.alt, photo.id, "original"]
+            .filter(Boolean)
+            .join("-")
 
-        onDownloadImage(imageUrl, imageName)
+        onDownloadImage(photo.src.original, imageName)
     }
 
     return (
