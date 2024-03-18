@@ -58,6 +58,10 @@ export interface IPhoto {
     alt: string
 }
 
+export interface IPhotoWithLiked extends IPhoto {
+    isLiked: boolean
+}
+
 export type IPhotos = IPaginationObject & { photos: IPhoto[] }
 
 export type IPhotosWithTotalResults = IPhotos & { total_results: number }

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom"
+import { IconHeartFilled } from "@tabler/icons-react"
 import { twMerge } from "tailwind-merge"
 
+import Button from "@/components/buttons/Button"
 import Logo from "./Logo"
 import SearchBar from "./SearchBar"
 
@@ -17,9 +19,15 @@ export type THeaderPosition = "fixed" | "absolute"
 
 interface IHeaderProps {
     position?: THeaderPosition
+    SearchBarStyle?: string
+    likedButtonStyle?: string
 }
 
-export default function Header({ position = "fixed" }: IHeaderProps) {
+export default function Header({
+    position = "fixed",
+    SearchBarStyle,
+    likedButtonStyle,
+}: IHeaderProps) {
     return (
         <header
             className={twMerge(
@@ -30,15 +38,32 @@ export default function Header({ position = "fixed" }: IHeaderProps) {
             <nav className="flex-1">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="flex items-center gap-3 md:gap-5 justify-between">
-                        <Link to="/">
-                            <Logo />
-                        </Link>
+                        <div>
+                            <Link to="/">
+                                <Logo />
+                            </Link>
+                        </div>
 
-                        {position === "fixed" && (
-                            <div className="flex-1 max-w-[56ch]">
+                        <div className="flex-1 max-w-[62ch] flex gap-3">
+                            <div
+                                className={twMerge(
+                                    SearchBarStyle && SearchBarStyle,
+                                    "flex-1 w-full"
+                                )}
+                            >
                                 <SearchBar size="small" />
                             </div>
-                        )}
+
+                            <Button
+                                variant="outline"
+                                className={twMerge(
+                                    likedButtonStyle,
+                                    "hover:text-red-500 text-slate-500"
+                                )}
+                            >
+                                <IconHeartFilled size="24" />
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </nav>

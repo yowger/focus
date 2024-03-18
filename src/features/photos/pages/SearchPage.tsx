@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 
 import { colorItems, orientationItems, sizeItems } from "../data/PhotoFilters"
 
+import { useLocalStorage } from "@/hooks/useLocalStorage"
 import { download } from "@/utils/mediaUtils"
 import { useInfinitePhotos } from "../api/useInfinitePhotos"
 
@@ -15,6 +16,7 @@ import PhotoList from "../components/PhotoList"
 import type { IColorMenuItem, IMenuItem } from "@/components/dropdown/types"
 import type {
     IPhoto,
+    IPhotoWithLiked,
     TPhotoColors,
     TPhotoOrientations,
     TPhotoSizes,
@@ -30,7 +32,9 @@ function SearchPage() {
     const [isOpen, setIsOpen] = useState(false)
     const [hasNext, setHasNext] = useState(false)
     const [hasPrev, setHasPrev] = useState(false)
-    const [selectedPhoto, setSelectedPhoto] = useState<IPhoto | null>(null)
+    const [selectedPhoto, setSelectedPhoto] = useState<IPhotoWithLiked | null>(
+        null
+    )
     const [photoFilters, setPhotoFilters] = useState<IPhotoFilters>({
         orientation: null,
         size: null,
@@ -45,16 +49,62 @@ function SearchPage() {
         size: photoFilters.size,
     })
 
-    const photos = useMemo(() => {
-        return photosQuery.data?.pages.flatMap((page) => page.photos) || []
-    }, [photosQuery.data?.pages])
+    const [likedPhotos, setLikedPhotos] = useLocalStorage<IPhoto[]>(
+        "liked-photos",
+        []
+    )
+
+    const photos: IPhotoWithLiked[] = useMemo(() => {
+        return (
+            photosQuery.data?.pages.flatMap((page) =>
+                page.photos.map((photo) => ({
+                    ...photo,
+                    isLiked: likedPhotos.some(
+                        (likedPhoto) => likedPhoto.id === photo.id
+                    ),
+                }))
+            ) || []
+        )
+    }, [photosQuery.data?.pages, likedPhotos])
+
     const totalPhotosLength = useMemo(() => {
         return photosQuery?.data?.pages[0].total_results || 0
     }, [photosQuery.data?.pages])
 
     const handlePhotoClick = (photo: IPhoto) => {
         handleOpen()
-        setSelectedPhoto(photo)
+
+        setSelectedPhoto({
+            ...photo,
+            isLiked: likedPhotos.some(
+                (likedPhoto) => likedPhoto.id === photo.id
+            ),
+        })
+    }
+
+    const handlePhotoLike = (photo: IPhotoWithLiked) => {
+        handleLike(photo)
+
+        setSelectedPhoto({
+            ...photo,
+            isLiked: !photo.isLiked,
+        })
+    }
+
+    const handleLike = (photo: IPhoto) => {
+        setLikedPhotos((likedPhotos) => {
+            const photoIndex = likedPhotos.findIndex(
+                (likedPhoto) => likedPhoto.id === photo.id
+            )
+
+            const photoExist = photoIndex !== -1
+
+            if (photoExist) {
+                return likedPhotos.filter((_, index) => index !== photoIndex)
+            } else {
+                return [...likedPhotos, photo]
+            }
+        })
     }
 
     const handleClose = () => {
@@ -177,6 +227,8 @@ function SearchPage() {
                         <PhotoList
                             photos={photos}
                             onPhotoClick={handlePhotoClick}
+                            onLikeClick={handleLike}
+                            onDownloadImage={handleDownloadImage}
                         />
                     )}
                 />
@@ -190,6 +242,7 @@ function SearchPage() {
                 hasNext={hasNext}
                 hasPrev={hasPrev}
                 onClose={handleClose}
+                onLikeCLick={handlePhotoLike}
                 onDownloadImage={handleDownloadImage}
                 onLeftClick={handleLeftClick}
                 onRightClick={handleRightClick}

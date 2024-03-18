@@ -11,14 +11,15 @@ import PhotoDetails from "@/features/photos/components/PhotoDetails"
 import Button from "../buttons/Button"
 import ModalOverlay from "./ModalOverlay"
 
-import type { IPhoto } from "@/features/photos/types/photoTypes"
+import type { IPhotoWithLiked } from "@/features/photos/types/photoTypes"
 
 interface IModalProps {
     isOpen: boolean
-    photo: IPhoto | null
+    photo: IPhotoWithLiked | null
     hasNext?: boolean
     hasPrev?: boolean
     onClose: () => void
+    onLikeCLick: (photo: IPhotoWithLiked) => void
     onDownloadImage: (imageUrl: string, imageName: string) => void
     onLeftClick: () => void
     onRightClick: () => void
@@ -30,10 +31,13 @@ export default function PhotoModal({
     hasNext = false,
     hasPrev = false,
     onClose,
+    onLikeCLick,
     onDownloadImage,
     onLeftClick,
     onRightClick,
 }: IModalProps) {
+    console.log("🚀 ~ photo:", photo)
+    
     const modalRef = useRef<HTMLDivElement>(null)
 
     const { lock, unlock } = useScrollLock({
@@ -75,6 +79,7 @@ export default function PhotoModal({
                     <div className="relative bg-white rounded-lg px-5 py-4 mt-7">
                         <PhotoDetails
                             photo={photo}
+                            onLikeCLick={onLikeCLick}
                             onDownloadImage={onDownloadImage}
                         />
                         {hasPrev && (

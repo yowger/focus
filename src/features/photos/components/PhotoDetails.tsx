@@ -5,15 +5,17 @@ import Button from "@/components/buttons/Button"
 import ButtonDropdown from "@/components/buttons/ButtonDropdown"
 
 import type { IButtonListItem } from "@/components/buttons/types"
-import type { IPhoto } from "../types/photoTypes"
+import type { IPhotoWithLiked } from "../types/photoTypes"
 
 interface IPhotoDetails {
-    photo: IPhoto
+    photo: IPhotoWithLiked
+    onLikeCLick: (photo: IPhotoWithLiked) => void
     onDownloadImage: (imageUrl: string, imageName: string) => void
 }
 
 export default function PhotoDetails({
     photo,
+    onLikeCLick,
     onDownloadImage,
 }: IPhotoDetails) {
     const photoDownloadItems: IButtonListItem[] = []
@@ -37,11 +39,12 @@ export default function PhotoDetails({
     }, [photo, photoDownloadItems])
 
     const handleDownloadOriginal = () => {
+        const imageUrl = photo.src.original
         const imageName = [photo.alt, photo.id, "original"]
             .filter(Boolean)
             .join("-")
 
-        onDownloadImage(photo.src.original, imageName)
+        onDownloadImage(imageUrl, imageName)
     }
 
     return (
@@ -52,8 +55,17 @@ export default function PhotoDetails({
                 </p>
 
                 <div className="flex gap-3">
-                    <Button variant="outline" size="normal">
-                        <IconHeartFilled className="text-gray-500" size={20} />
+                    <Button
+                        onClick={() => onLikeCLick(photo)}
+                        variant="outline"
+                        size="normal"
+                    >
+                        <IconHeartFilled
+                            className={
+                                photo.isLiked ? "text-red-500" : "text-gray-500"
+                            }
+                            size={20}
+                        />
                     </Button>
                     <ButtonDropdown
                         buttonFunction={handleDownloadOriginal}

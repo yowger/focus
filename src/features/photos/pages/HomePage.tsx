@@ -11,25 +11,74 @@ import Hero from "../components/Hero"
 import PhotoList from "../components/PhotoList"
 
 import type { THeaderPosition } from "../components/Header"
-import type { IPhoto } from "../types/photoTypes"
+import type { IPhoto, IPhotoWithLiked } from "../types/photoTypes"
+import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 function HomePage() {
     const [isOpen, setIsOpen] = useState(false)
     const [hasNext, setHasNext] = useState(false)
     const [hasPrev, setHasPrev] = useState(false)
-    const [selectedPhoto, setSelectedPhoto] = useState<IPhoto | null>(null)
+    const [selectedPhoto, setSelectedPhoto] = useState<IPhotoWithLiked | null>(
+        null
+    )
     const [headerPosition, setHeaderPosition] =
         useState<THeaderPosition>("absolute")
+    const [searchBarStyle, setSearchBarStyle] = useState("opacity-0")
 
     const photosQuery = useInfiniteCuratedPhotos()
 
-    const photos = useMemo(() => {
-        return photosQuery.data?.pages.flatMap((page) => page.photos) || []
-    }, [photosQuery.data?.pages])
+    const [likedPhotos, setLikedPhotos] = useLocalStorage<IPhoto[]>(
+        "liked-photos",
+        []
+    )
+
+    const photos: IPhotoWithLiked[] = useMemo(() => {
+        return (
+            photosQuery.data?.pages.flatMap((page) =>
+                page.photos.map((photo) => ({
+                    ...photo,
+                    isLiked: likedPhotos.some(
+                        (likedPhoto) => likedPhoto.id === photo.id
+                    ),
+                }))
+            ) || []
+        )
+    }, [photosQuery.data?.pages, likedPhotos])
 
     const handlePhotoClick = (photo: IPhoto) => {
         handleOpen()
-        setSelectedPhoto(photo)
+
+        setSelectedPhoto({
+            ...photo,
+            isLiked: likedPhotos.some(
+                (likedPhoto) => likedPhoto.id === photo.id
+            ),
+        })
+    }
+
+    const handlePhotoLike = (photo: IPhotoWithLiked) => {
+        handleLike(photo)
+
+        setSelectedPhoto({
+            ...photo,
+            isLiked: !photo.isLiked,
+        })
+    }
+
+    const handleLike = (photo: IPhoto) => {
+        setLikedPhotos((likedPhotos) => {
+            const photoIndex = likedPhotos.findIndex(
+                (likedPhoto) => likedPhoto.id === photo.id
+            )
+
+            const photoExist = photoIndex !== -1
+
+            if (photoExist) {
+                return likedPhotos.filter((_, index) => index !== photoIndex)
+            } else {
+                return [...likedPhotos, photo]
+            }
+        })
     }
 
     const handleClose = () => {
@@ -43,8 +92,10 @@ function HomePage() {
     const changeHeaderPosition = () => {
         if (window.scrollY >= 500) {
             setHeaderPosition("fixed")
+            setSearchBarStyle("")
         } else {
             setHeaderPosition("absolute")
+            setSearchBarStyle("opacity-0")
         }
     }
 
@@ -98,7 +149,7 @@ function HomePage() {
 
     return (
         <Fragment>
-            <Header position={headerPosition} />
+            <Header position={headerPosition} SearchBarStyle={searchBarStyle} />
             <Hero />
 
             <div className="flex flex-col max-w-7xl mx-auto px-4">
@@ -113,6 +164,8 @@ function HomePage() {
                         <PhotoList
                             photos={photos}
                             onPhotoClick={handlePhotoClick}
+                            onLikeClick={handleLike}
+                            onDownloadImage={handleDownloadImage}
                         />
                     )}
                 />
@@ -124,6 +177,7 @@ function HomePage() {
                 hasNext={hasNext}
                 hasPrev={hasPrev}
                 onClose={handleClose}
+                onLikeCLick={handlePhotoLike}
                 onDownloadImage={handleDownloadImage}
                 onLeftClick={handleLeftClick}
                 onRightClick={handleRightClick}
@@ -133,6 +187,3 @@ function HomePage() {
 }
 
 export const Component = HomePage
-
-// resent searches
-// try again button

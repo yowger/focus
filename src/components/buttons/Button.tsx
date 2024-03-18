@@ -10,6 +10,7 @@ type TButtonVariant =
     | "outline"
     | "ghost-invert"
     | "link"
+    | "white"
 type TButtonSize = "small" | "normal" | "large"
 type TButtonRoundness = "normal" | "full"
 
@@ -26,11 +27,12 @@ const buttonStyles = {
     },
     variant: {
         primary: "bg-teal-600 hover:bg-teal-700 text-white focus:bg-teal-700",
+        white: "bg-white text-gray-500 hover:text-slate-800",
         danger: "bg-red-600 hover:bg-red-700 text-white focus:bg-red-700",
         ghost: "text-slate-600",
         "ghost-invert": "text-white hover:text-neutral-500",
         outline:
-            "border border-stone-300 hover:border-stone-500 focus:border-stone-500",
+            "bg-white border border-stone-300 hover:border-stone-500 focus:border-stone-500",
         link: "p-0 p-0 h-min font-normal font-normal",
     },
 }
