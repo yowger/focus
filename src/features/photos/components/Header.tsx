@@ -54,15 +54,17 @@ export default function Header({
                                 <SearchBar size="small" />
                             </div>
 
-                            <Button
-                                variant="outline"
-                                className={twMerge(
-                                    likedButtonStyle,
-                                    "hover:text-red-500 text-slate-500"
-                                )}
-                            >
-                                <IconHeartFilled size="24" />
-                            </Button>
+                            <Link to="/likes">
+                                <Button
+                                    variant="outline"
+                                    className={twMerge(
+                                        likedButtonStyle,
+                                        "hover:text-red-500 text-slate-500"
+                                    )}
+                                >
+                                    <IconHeartFilled size="24" />
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                 </div>

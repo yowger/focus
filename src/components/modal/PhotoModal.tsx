@@ -36,8 +36,6 @@ export default function PhotoModal({
     onLeftClick,
     onRightClick,
 }: IModalProps) {
-    console.log("🚀 ~ photo:", photo)
-    
     const modalRef = useRef<HTMLDivElement>(null)
 
     const { lock, unlock } = useScrollLock({

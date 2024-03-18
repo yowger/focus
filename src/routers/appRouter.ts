@@ -12,6 +12,10 @@ const appRouter = createBrowserRouter([
                 path: "search/:query",
                 lazy: () => import("../features/photos/pages/SearchPage"),
             },
+            {
+                path: "likes",
+                lazy: () => import("../features/photos/pages/LikedPage"),
+            },
         ],
     },
     {

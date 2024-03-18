@@ -7,6 +7,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage"
 import { download } from "@/utils/mediaUtils"
 import { useInfinitePhotos } from "../api/useInfinitePhotos"
 
+import MainContainer from "@/components/containers/MainContainer"
 import QueryFilter from "@/components/dropdown/QueryFilter"
 import PhotoModal from "@/components/modal/PhotoModal"
 import RenderInfiniteList from "@/components/generic/RenderInfiniteList"
@@ -188,7 +189,7 @@ function SearchPage() {
         <Fragment>
             <Header position="fixed" />
 
-            <div className="flex flex-col max-w-7xl mx-auto px-4 mt-20 gap-8">
+            <MainContainer className="mt-20 gap-8">
                 <Title>
                     <span className="capitalize">{query}</span> images{" "}
                     <span className="text-slate-500 text-4xl">
@@ -232,7 +233,7 @@ function SearchPage() {
                         />
                     )}
                 />
-            </div>
+            </MainContainer>
 
             <div className="mt-20">footer</div>
 

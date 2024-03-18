@@ -4,6 +4,7 @@ import { useEventListener } from "@/hooks/useEventListener"
 import { download } from "@/utils/mediaUtils"
 import { useInfiniteCuratedPhotos } from "../api/useInfiniteCuratedPhotos"
 
+import MainContainer from "@/components/containers/MainContainer"
 import PhotoModal from "@/components/modal/PhotoModal"
 import RenderInfiniteList from "@/components/generic/RenderInfiniteList"
 import Header from "../components/Header"
@@ -152,7 +153,7 @@ function HomePage() {
             <Header position={headerPosition} SearchBarStyle={searchBarStyle} />
             <Hero />
 
-            <div className="flex flex-col max-w-7xl mx-auto px-4">
+            <MainContainer>
                 <RenderInfiniteList
                     data={photos}
                     dataLength={photos.length}
@@ -169,7 +170,7 @@ function HomePage() {
                         />
                     )}
                 />
-            </div>
+            </MainContainer>
 
             <PhotoModal
                 isOpen={isOpen}
