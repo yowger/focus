@@ -4,6 +4,8 @@ import { useLocalStorage } from "@/hooks/useLocalStorage"
 import { download } from "@/utils/mediaUtils"
 
 import MainContainer from "@/components/containers/MainContainer"
+import PageContainer from "@/components/containers/PageContainer"
+import Footer from "@/components/layouts/Footer"
 import PhotoModal from "@/components/modal/PhotoModal"
 import { Header, Title } from "../components"
 import PhotoList from "../components/PhotoList"
@@ -127,21 +129,26 @@ function LikedPage() {
     return (
         <Fragment>
             <Header position="fixed" />
-            <MainContainer className="mt-20 gap-8">
-                <Title>
-                    Your likes{" "}
-                    <span className="text-slate-500 text-4xl">
-                        ({photos.length})
-                    </span>
-                </Title>
 
-                <PhotoList
-                    photos={photos}
-                    onPhotoClick={handlePhotoClick}
-                    onLikeClick={handleLike}
-                    onDownloadImage={handleDownloadImage}
-                />
-            </MainContainer>
+            <PageContainer>
+                <MainContainer className="mt-20 gap-8 flex-1">
+                    <Title>
+                        Your likes{" "}
+                        <span className="text-slate-500 text-4xl">
+                            ({photos.length})
+                        </span>
+                    </Title>
+
+                    <PhotoList
+                        photos={photos}
+                        onPhotoClick={handlePhotoClick}
+                        onLikeClick={handleLike}
+                        onDownloadImage={handleDownloadImage}
+                    />
+                </MainContainer>
+
+                <Footer className="mt-8" />
+            </PageContainer>
 
             <PhotoModal
                 isOpen={isOpen}

@@ -5,13 +5,15 @@ import { download } from "@/utils/mediaUtils"
 import { useInfiniteCuratedPhotos } from "../api/useInfiniteCuratedPhotos"
 
 import MainContainer from "@/components/containers/MainContainer"
+import PageContainer from "@/components/containers/PageContainer"
+import Footer from "@/components/layouts/Footer"
 import PhotoModal from "@/components/modal/PhotoModal"
 import RenderInfiniteList from "@/components/generic/RenderInfiniteList"
-import Header from "../components/Header"
+import Header from "../../../components/layouts/Header"
 import Hero from "../components/Hero"
 import PhotoList from "../components/PhotoList"
 
-import type { THeaderPosition } from "../components/Header"
+import type { THeaderPosition } from "../../../components/layouts/Header"
 import type { IPhoto, IPhotoWithLiked } from "../types/photoTypes"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
@@ -151,26 +153,31 @@ function HomePage() {
     return (
         <Fragment>
             <Header position={headerPosition} SearchBarStyle={searchBarStyle} />
+
             <Hero />
 
-            <MainContainer>
-                <RenderInfiniteList
-                    data={photos}
-                    dataLength={photos.length}
-                    isLoading={photosQuery.isLoading}
-                    isError={photosQuery.isError}
-                    hasNextPage={photosQuery.hasNextPage}
-                    fetchNextPage={photosQuery.fetchNextPage}
-                    renderComponent={(photos) => (
-                        <PhotoList
-                            photos={photos}
-                            onPhotoClick={handlePhotoClick}
-                            onLikeClick={handleLike}
-                            onDownloadImage={handleDownloadImage}
-                        />
-                    )}
-                />
-            </MainContainer>
+            <PageContainer>
+                <MainContainer>
+                    <RenderInfiniteList
+                        data={photos}
+                        dataLength={photos.length}
+                        isLoading={photosQuery.isLoading}
+                        isError={photosQuery.isError}
+                        hasNextPage={photosQuery.hasNextPage}
+                        fetchNextPage={photosQuery.fetchNextPage}
+                        renderComponent={(photos) => (
+                            <PhotoList
+                                photos={photos}
+                                onPhotoClick={handlePhotoClick}
+                                onLikeClick={handleLike}
+                                onDownloadImage={handleDownloadImage}
+                            />
+                        )}
+                    />
+                </MainContainer>
+
+                <Footer className="mt-8" />
+            </PageContainer>
 
             <PhotoModal
                 isOpen={isOpen}

@@ -22,6 +22,8 @@ import type {
     TPhotoOrientations,
     TPhotoSizes,
 } from "../types/photoTypes"
+import PageContainer from "@/components/containers/PageContainer"
+import Footer from "@/components/layouts/Footer"
 
 interface IPhotoFilters {
     color: TPhotoColors | null
@@ -189,53 +191,55 @@ function SearchPage() {
         <Fragment>
             <Header position="fixed" />
 
-            <MainContainer className="mt-20 gap-8">
-                <Title>
-                    <span className="capitalize">{query}</span> images{" "}
-                    <span className="text-slate-500 text-4xl">
-                        ({totalPhotosLength})
-                    </span>
-                </Title>
+            <PageContainer>
+                <MainContainer className="mt-20 gap-8">
+                    <Title>
+                        <span className="capitalize">{query}</span> images{" "}
+                        <span className="text-slate-500 text-4xl">
+                            ({totalPhotosLength})
+                        </span>
+                    </Title>
 
-                <div className="grid grid-cols-3 gap-5">
-                    <QueryFilter<"default", TPhotoOrientations>
-                        menuItems={orientationItems}
-                        initialActiveIndex={0}
-                        onSelect={handleSelectOrientation}
-                    />
-
-                    <QueryFilter<"default", TPhotoSizes>
-                        menuItems={sizeItems}
-                        initialActiveIndex={0}
-                        onSelect={handleSelectSize}
-                    />
-
-                    <QueryFilter<"color", TPhotoColors>
-                        menuItems={colorItems}
-                        initialActiveIndex={0}
-                        onSelect={handleSelectColor}
-                    />
-                </div>
-
-                <RenderInfiniteList
-                    data={photos}
-                    dataLength={photos.length}
-                    isLoading={photosQuery.isLoading}
-                    isError={photosQuery.isError}
-                    hasNextPage={photosQuery.hasNextPage}
-                    fetchNextPage={photosQuery.fetchNextPage}
-                    renderComponent={(photos) => (
-                        <PhotoList
-                            photos={photos}
-                            onPhotoClick={handlePhotoClick}
-                            onLikeClick={handleLike}
-                            onDownloadImage={handleDownloadImage}
+                    <div className="grid grid-cols-3 gap-5">
+                        <QueryFilter<"default", TPhotoOrientations>
+                            menuItems={orientationItems}
+                            initialActiveIndex={0}
+                            onSelect={handleSelectOrientation}
                         />
-                    )}
-                />
-            </MainContainer>
 
-            <div className="mt-20">footer</div>
+                        <QueryFilter<"default", TPhotoSizes>
+                            menuItems={sizeItems}
+                            initialActiveIndex={0}
+                            onSelect={handleSelectSize}
+                        />
+
+                        <QueryFilter<"color", TPhotoColors>
+                            menuItems={colorItems}
+                            initialActiveIndex={0}
+                            onSelect={handleSelectColor}
+                        />
+                    </div>
+
+                    <RenderInfiniteList
+                        data={photos}
+                        dataLength={photos.length}
+                        isLoading={photosQuery.isLoading}
+                        isError={photosQuery.isError}
+                        hasNextPage={photosQuery.hasNextPage}
+                        fetchNextPage={photosQuery.fetchNextPage}
+                        renderComponent={(photos) => (
+                            <PhotoList
+                                photos={photos}
+                                onPhotoClick={handlePhotoClick}
+                                onLikeClick={handleLike}
+                                onDownloadImage={handleDownloadImage}
+                            />
+                        )}
+                    />
+                </MainContainer>
+
+                <Footer className="mt-8" />
+            </PageContainer>
 
             <PhotoModal
                 isOpen={isOpen}

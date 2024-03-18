@@ -2,7 +2,7 @@ import type { ComponentProps, ReactNode } from "react"
 import { twMerge } from "tailwind-merge"
 
 interface IMainContainer {
-    children: ReactNode
+    children?: ReactNode
     className?: ComponentProps<"div">["className"]
 }
 

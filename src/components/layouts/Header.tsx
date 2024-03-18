@@ -3,8 +3,8 @@ import { IconHeartFilled } from "@tabler/icons-react"
 import { twMerge } from "tailwind-merge"
 
 import Button from "@/components/buttons/Button"
-import Logo from "./Logo"
-import SearchBar from "./SearchBar"
+import Logo from "../../features/photos/components/Logo"
+import SearchBar from "../../features/photos/components/SearchBar"
 
 const headerStyles = {
     container: {
