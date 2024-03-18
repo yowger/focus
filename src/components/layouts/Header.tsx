@@ -21,12 +21,14 @@ interface IHeaderProps {
     position?: THeaderPosition
     SearchBarStyle?: string
     likedButtonStyle?: string
+    LogoStyle?: string
 }
 
 export default function Header({
     position = "fixed",
     SearchBarStyle,
     likedButtonStyle,
+    LogoStyle,
 }: IHeaderProps) {
     return (
         <header
@@ -39,8 +41,16 @@ export default function Header({
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="flex items-center gap-3 md:gap-5 justify-between">
                         <div>
-                            <Link to="/">
+                            <Link to="/" className="flex items-center gap-3">
                                 <Logo />
+                                <span
+                                    className={twMerge(
+                                        LogoStyle && LogoStyle,
+                                        "text-[27px] font-medium tracking-wider"
+                                    )}
+                                >
+                                    Focus
+                                </span>
                             </Link>
                         </div>
 

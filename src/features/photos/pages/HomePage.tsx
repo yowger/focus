@@ -27,6 +27,7 @@ function HomePage() {
     const [headerPosition, setHeaderPosition] =
         useState<THeaderPosition>("absolute")
     const [searchBarStyle, setSearchBarStyle] = useState("opacity-0")
+    const [logoStyle, setLogoStyle] = useState("text-white")
 
     const photosQuery = useInfiniteCuratedPhotos()
 
@@ -96,8 +97,10 @@ function HomePage() {
         if (window.scrollY >= 500) {
             setHeaderPosition("fixed")
             setSearchBarStyle("")
+            setLogoStyle("")
         } else {
             setHeaderPosition("absolute")
+            setLogoStyle("text-white")
             setSearchBarStyle("opacity-0")
         }
     }
@@ -152,7 +155,11 @@ function HomePage() {
 
     return (
         <Fragment>
-            <Header position={headerPosition} SearchBarStyle={searchBarStyle} />
+            <Header
+                position={headerPosition}
+                SearchBarStyle={searchBarStyle}
+                LogoStyle={logoStyle}
+            />
 
             <Hero />
 

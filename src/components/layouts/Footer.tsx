@@ -21,8 +21,9 @@ export default function PageContainer({ className }: IFooterProps) {
             <MainContainer>
                 <div className="flex flex-col items-center gap-4">
                     <div className="flex flex-col items-center">
-                        <h2 className="text-3xl font-normal tracking-wider flex items-center mb-2 gap-1">
+                        <h2 className="text-[27px] tracking-wider flex items-center mb-2 gap-1">
                             <IconFocusCentered size={34} />
+                            Focus
                         </h2>
 
                         <p className="max-w-[56ch] text-center text-lg">
