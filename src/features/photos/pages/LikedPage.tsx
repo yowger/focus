@@ -1,12 +1,14 @@
 import { Fragment, useEffect, useState } from "react"
 
-import { Header } from "../components"
-import MainContainer from "@/components/containers/MainContainer"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
-import { IPhoto, IPhotoWithLiked } from "../types/photoTypes"
-import PhotoList from "../components/PhotoList"
 import { download } from "@/utils/mediaUtils"
+
+import MainContainer from "@/components/containers/MainContainer"
 import PhotoModal from "@/components/modal/PhotoModal"
+import { Header, Title } from "../components"
+import PhotoList from "../components/PhotoList"
+
+import type { IPhoto, IPhotoWithLiked } from "../types/photoTypes"
 
 function LikedPage() {
     const [isOpen, setIsOpen] = useState(false)
@@ -126,7 +128,13 @@ function LikedPage() {
         <Fragment>
             <Header position="fixed" />
             <MainContainer className="mt-20 gap-8">
-                LikedPage
+                <Title>
+                    Your likes{" "}
+                    <span className="text-slate-500 text-4xl">
+                        ({photos.length})
+                    </span>
+                </Title>
+
                 <PhotoList
                     photos={photos}
                     onPhotoClick={handlePhotoClick}
