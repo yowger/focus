@@ -49,15 +49,19 @@ Focus App is a web application designed to help users find and focus on high-qua
 https://github.com/yowger/focus/assets/106136772/b0e50d46-f2e4-41be-8e37-599da62b764b
 
 - Search with filters (e.g., by category, color, orientation)
+  
 https://github.com/yowger/focus/assets/106136772/9f67a92f-97d2-4f0e-8c48-bd3ee361fd84
 
 - Photo modal with next and previous navigation
+  
 https://github.com/yowger/focus/assets/106136772/6b2cffd9-91e4-4759-9717-146159ab7742
 
-- Save favorite images for later viewing
+- Save favorite images for later viewin
+
 https://github.com/yowger/focus/assets/106136772/3314a364-ea4e-453c-962c-ae2017c3989d
 
 - Download pictures
+  
 https://github.com/yowger/focus/assets/106136772/4c4919d9-a7c9-4be2-81b2-41a24b20d196
 
 ## Technologies Used
