@@ -11,6 +11,7 @@ import { Header } from "../components"
 import PhotoDetails from "../components/PhotoDetails"
 
 import type { IPhoto, IPhotoWithLiked } from "../types/photoTypes"
+import LoaderIcon from "@/components/loader/Loader"
 
 function PhotoPage() {
     const { photoId = "" } = useParams()
@@ -60,7 +61,9 @@ function PhotoPage() {
             <PageContainer>
                 <MainContainer className="mt-20 gap-8 w-full">
                     {photoIsLoading ? (
-                        <p>loading...</p>
+                        <div>
+                            <LoaderIcon />
+                        </div>
                     ) : photoWithLike === null ? (
                         <p>no photos</p>
                     ) : (

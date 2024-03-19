@@ -31,6 +31,7 @@ export default function PhotoList({
             {photos.map((photo, index) => {
                 return (
                     <Link
+                        key={`photo-item-${index}`}
                         to={`photo/${photo.id}`}
                         onClick={(event) => {
                             if (event.button !== 1) {
@@ -39,7 +40,6 @@ export default function PhotoList({
                         }}
                     >
                         <PhotoItem
-                            key={`photo-item-${index}`}
                             photo={photo}
                             onPhotoClick={onPhotoClick}
                             onLikeCLick={onLikeClick}

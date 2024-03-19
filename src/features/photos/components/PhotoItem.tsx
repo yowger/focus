@@ -46,9 +46,9 @@ export default function PhotoItem({
                     </Button>
                 </div>
                 <div className="flex justify-between items-center">
-                    <a className="text-white text-sm cursor-pointer">
+                    <span className="text-white text-sm cursor-pointer">
                         {photo.photographer}
-                    </a>
+                    </span>
                     <Button
                         onClick={(event) => {
                             event.stopPropagation()
