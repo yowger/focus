@@ -20,10 +20,7 @@ export default function DropDownList({
         <ul className="divide-y overflow-hidden rounded-md text-lg font-medium">
             {menuItems.map((menuItem, index) => {
                 return (
-                    <li
-                        key={index}
-                        onClick={() => handleItemClick(activeIndex)}
-                    >
+                    <li key={index} onClick={() => handleItemClick(index)}>
                         <DropDownItem
                             label={menuItem.label}
                             active={index === activeIndex}

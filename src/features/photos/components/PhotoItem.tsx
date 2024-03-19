@@ -20,7 +20,10 @@ export default function PhotoItem({
 }: IPhotoItemProps) {
     return (
         <div
-            onClick={() => onPhotoClick(photo)}
+            onClick={(event) => {
+                event.stopPropagation()
+                onPhotoClick(photo)
+            }}
             className="relative cursor-zoom-in group bg-slate-50"
         >
             <img
@@ -29,7 +32,10 @@ export default function PhotoItem({
                 className="object-cover object-center w-full aspect-[4/3] max-w-full rounded-sm"
                 loading="lazy"
             />
-            <div className="opacity-0 group-hover:opacity-100 absolute inset-0 flex flex-col justify-between p-3 z-40">
+
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-800/25 via-transparent to-gray-800/50 opacity-0 group-hover:opacity-100 duration-150 rounded-sm" />
+
+            <div className="opacity-0 group-hover:opacity-100 absolute flex flex-col justify-between p-3  top-0 left-0 w-full h-full">
                 <div className="flex-1 flex justify-end">
                     <Button
                         onClick={(event) => {
@@ -61,7 +67,6 @@ export default function PhotoItem({
                     </Button>
                 </div>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-800/25 via-transparent to-gray-800/50 opacity-0 group-hover:opacity-100 duration-150 rounded-sm" />
         </div>
     )
 }

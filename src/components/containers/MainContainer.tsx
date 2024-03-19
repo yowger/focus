@@ -10,7 +10,7 @@ export default function MainContainer({ children, className }: IMainContainer) {
     return (
         <div
             className={twMerge(
-                "flex flex-col max-w-7xl mx-auto px-4",
+                "flex flex-col max-w-7xl mx-auto px-4 w-full",
                 className
             )}
         >

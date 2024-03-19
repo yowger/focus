@@ -1,5 +1,4 @@
 import PhotoItem from "./PhotoItem"
-import { Link } from "react-router-dom"
 
 import type { IPhotoWithLiked } from "../types/photoTypes"
 
@@ -30,23 +29,13 @@ export default function PhotoList({
         <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
             {photos.map((photo, index) => {
                 return (
-                    <Link
+                    <PhotoItem
                         key={`photo-item-${index}`}
-                        to={`photo/${photo.id}`}
-                        onClick={(event) => {
-                            event.preventDefault()
-                            if (event.button !== 1) {
-                                event.preventDefault()
-                            }
-                        }}
-                    >
-                        <PhotoItem
-                            photo={photo}
-                            onPhotoClick={onPhotoClick}
-                            onLikeCLick={onLikeClick}
-                            onDownloadClick={handleDownloadOriginal}
-                        />
-                    </Link>
+                        photo={photo}
+                        onPhotoClick={onPhotoClick}
+                        onLikeCLick={onLikeClick}
+                        onDownloadClick={handleDownloadOriginal}
+                    />
                 )
             })}
         </section>

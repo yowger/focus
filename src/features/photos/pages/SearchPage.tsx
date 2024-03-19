@@ -8,6 +8,8 @@ import { download } from "@/utils/mediaUtils"
 import { useInfinitePhotos } from "../api/useInfinitePhotos"
 
 import MainContainer from "@/components/containers/MainContainer"
+import PageContainer from "@/components/containers/PageContainer"
+import Footer from "@/components/layouts/Footer"
 import QueryFilter from "@/components/dropdown/QueryFilter"
 import PhotoModal from "@/components/modal/PhotoModal"
 import RenderInfiniteList from "@/components/generic/RenderInfiniteList"
@@ -22,8 +24,6 @@ import type {
     TPhotoOrientations,
     TPhotoSizes,
 } from "../types/photoTypes"
-import PageContainer from "@/components/containers/PageContainer"
-import Footer from "@/components/layouts/Footer"
 
 interface IPhotoFilters {
     color: TPhotoColors | null
