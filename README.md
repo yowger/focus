@@ -69,7 +69,7 @@ https://github.com/yowger/focus/assets/106136772/4c4919d9-a7c9-4be2-81b2-41a24b2
 2. Install dependencies using `npm install`.
 3. Create a `.env` file in the root directory of the project.
 4. Add the following environment variables to the `.env` file:
-```http
+```
   VITE_PEXELS_API_URL=https://api.pexels.com/v1
   VITE_PEXELS_API_KEY=your_pexels_api_key_here
 ```
