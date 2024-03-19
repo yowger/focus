@@ -1,7 +1,7 @@
 import PhotoItem from "./PhotoItem"
+import { Link } from "react-router-dom"
 
 import type { IPhotoWithLiked } from "../types/photoTypes"
-import { Link } from "react-router-dom"
 
 interface IPhotoListProps {
     photos: IPhotoWithLiked[]
@@ -34,6 +34,7 @@ export default function PhotoList({
                         key={`photo-item-${index}`}
                         to={`photo/${photo.id}`}
                         onClick={(event) => {
+                            event.preventDefault()
                             if (event.button !== 1) {
                                 event.preventDefault()
                             }
