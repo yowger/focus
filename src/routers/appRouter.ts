@@ -13,6 +13,10 @@ const appRouter = createBrowserRouter([
                 lazy: () => import("../features/photos/pages/SearchPage"),
             },
             {
+                path: "photo/:photoId",
+                lazy: () => import("../features/photos/pages/PhotoPage"),
+            },
+            {
                 path: "likes",
                 lazy: () => import("../features/photos/pages/LikedPage"),
             },

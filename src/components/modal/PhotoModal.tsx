@@ -84,7 +84,7 @@ export default function PhotoModal({
                             <Button
                                 onClick={onLeftClick}
                                 className="fixed top-[40%] left-[10px]"
-                                variant="ghost-invert"
+                                variant="ghostInvert"
                                 size="large"
                             >
                                 <IconChevronLeft size={42} />
@@ -97,7 +97,7 @@ export default function PhotoModal({
                                 style={{
                                     right: `calc(10px + ${scrollBarWidth}px)`,
                                 }}
-                                variant="ghost-invert"
+                                variant="ghostInvert"
                                 size="large"
                             >
                                 <IconChevronRight size={42} />

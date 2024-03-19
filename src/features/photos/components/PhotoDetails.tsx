@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { IconHeartFilled, IconShare } from "@tabler/icons-react"
+import { IconHeartFilled } from "@tabler/icons-react"
 
 import Button from "@/components/buttons/Button"
 import ButtonDropdown from "@/components/buttons/ButtonDropdown"
@@ -91,12 +91,12 @@ export default function PhotoDetails({
                         {photo?.photographer}
                     </a>
                 </p>
-                <div>
+                {/* <div>
                     <Button variant="outline" size="normal">
                         <IconShare className="text-gray-500" size={20} />
                         Share
                     </Button>
-                </div>
+                </div> */}
             </div>
         </div>
     )

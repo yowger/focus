@@ -1,13 +1,7 @@
-import type { ReactNode } from "react"
+import type { PropsWithChildren } from "react"
 
-interface ITitle {
-    children: ReactNode
-}
+interface ITitle extends PropsWithChildren {}
 
 export default function Title({ children }: ITitle) {
-    return (
-        <h1 className="text-5xl font-medium text-slate-800">
-            {children}
-        </h1>
-    )
+    return <h1 className="text-5xl font-medium text-slate-800">{children}</h1>
 }
