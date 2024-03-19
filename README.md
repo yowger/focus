@@ -2,6 +2,9 @@
 
 Focus App is a web application designed to help users find and focus on high-quality images using the Pexels API. It serves as a personal project aimed at improving productivity and providing a visually appealing experience.
 
+## Live website
+[https://focus-two-tau.vercel.app/](https://focus-two-tau.vercel.app/)
+
 ## Features
 
 - Search for images using keywords
@@ -42,6 +45,7 @@ Focus App is a web application designed to help users find and focus on high-qua
 ## Features
 
 - View pictures with infinite loading for seamless browsing
+  
 https://github.com/yowger/focus/assets/106136772/b0e50d46-f2e4-41be-8e37-599da62b764b
 
 - Search with filters (e.g., by category, color, orientation)
