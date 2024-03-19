@@ -3,18 +3,39 @@ import { twMerge } from "tailwind-merge"
 
 import type { ButtonHTMLAttributes } from "react"
 
-type TButtonVariant =
-    | "primary"
-    | "danger"
-    | "ghost"
-    | "outline"
-    | "ghost-invert"
-    | "link"
-    | "white"
-type TButtonSize = "small" | "normal" | "large"
-type TButtonRoundness = "normal" | "full"
+const buttonSizes = {
+    small: "small",
+    normal: "normal",
+    large: "large",
+} as const
 
-const buttonStyles = {
+const buttonVariants = {
+    primary: "primary",
+    danger: "danger",
+    ghost: "ghost",
+    ghostInvert: "ghost-invert",
+    outline: "outline",
+    link: "link",
+    white: "white",
+} as const
+
+const buttonRoundness = {
+    normal: "normal",
+    full: "full",
+} as const
+
+type TButtonVariant = keyof typeof buttonVariants
+type TButtonSize = keyof typeof buttonSizes
+type TButtonRoundness = keyof typeof buttonRoundness
+
+type ButtonStyles = {
+    base: string
+    size: Record<TButtonSize, string>
+    roundness: Record<TButtonRoundness, string>
+    variant: Record<TButtonVariant, string>
+}
+
+const buttonStyles: ButtonStyles = {
     base: "text-slate-800 focus:outline-none transition ease-in-out duration-300 font-medium overflow-hidden flex gap-2.5 items-center whitespace-nowrap",
     size: {
         small: "px-3 h-[36.6px] text-sm",
@@ -30,7 +51,7 @@ const buttonStyles = {
         white: "bg-white text-gray-500 hover:text-slate-800",
         danger: "bg-red-600 hover:bg-red-700 text-white focus:bg-red-700",
         ghost: "text-slate-600",
-        "ghost-invert": "text-white hover:text-neutral-500",
+        ghostInvert: "text-white hover:text-neutral-500",
         outline:
             "bg-white border border-stone-300 hover:border-stone-500 focus:border-stone-500",
         link: "p-0 p-0 h-min font-normal font-normal",
