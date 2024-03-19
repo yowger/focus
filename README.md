@@ -5,6 +5,10 @@ Focus App is a web application designed to help users find and focus on high-qua
 ## Live website
 [https://focus-two-tau.vercel.app/](https://focus-two-tau.vercel.app/)
 
+## Demo
+[![Focus youtube demo](https://img.youtube.com/vi/9yxqZmBt5j8/0.jpg)](https://www.youtube.com/watch?v=9yxqZmBt5j8)
+
+
 ## Features
 
 - Search for images using keywords
