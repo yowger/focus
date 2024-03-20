@@ -5,17 +5,6 @@ Focus App is a web application designed to help users find and focus on high-qua
 ## Live website
 [https://focus-two-tau.vercel.app/](https://focus-two-tau.vercel.app/)
 
-## Demo
-[![Focus youtube demo](https://img.youtube.com/vi/9yxqZmBt5j8/0.jpg)](https://www.youtube.com/watch?v=9yxqZmBt5j8)
-
-
-## Features
-
-- Search for images using keywords
-- View high-resolution images
-- Save favorite images for later viewing
-- Customizable focus modes
-
 ## Technologies Used
 
 - React for building the user interface
@@ -23,28 +12,8 @@ Focus App is a web application designed to help users find and focus on high-qua
 - Tailwind CSS for styling
 - Pexels API for fetching images
 
-## Installation
-
-1. Clone the repository.
-2. Install dependencies using `npm install`.
-3. Start the development server using `npm start`.
-
-## Usage
-
-- Search for images using the search bar.
-- Click on an image to view it in full size.
-- Use the favorite button to save images for later viewing.
-
-## Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-# Focus App
-
-Focus App is a web application designed to help users find and focus on high-quality images using the Pexels API. It serves as a personal project aimed at improving productivity and providing a visually appealing experience.
+## Demo
+[![Focus youtube demo](https://img.youtube.com/vi/9yxqZmBt5j8/0.jpg)](https://www.youtube.com/watch?v=9yxqZmBt5j8)
 
 ## Features
 
@@ -67,13 +36,6 @@ https://github.com/yowger/focus/assets/106136772/3314a364-ea4e-453c-962c-ae2017c
 - Download pictures
   
 https://github.com/yowger/focus/assets/106136772/4c4919d9-a7c9-4be2-81b2-41a24b20d196
-
-## Technologies Used
-
-- React for building the user interface
-- TypeScript for type safety
-- Tailwind CSS for styling
-- Pexels API for fetching images
 
 ## Installation
 
