@@ -2,6 +2,11 @@
 
 Focus App is a web application designed to help users find and focus on high-quality images using the Pexels API. It serves as a personal project aimed at improving productivity and providing a visually appealing experience.
 
+- All components are custom made, with tailwind and typescript safety
+- For folder structure, I went with the feature folder structure
+- For infinite rendering and fetching, I used react router with axios, and react-infinite-scroll-component for infinite scrolling.
+- I used a local storage hook to save liked items
+
 ## Live website
 [https://focus-two-tau.vercel.app/](https://focus-two-tau.vercel.app/)
 
